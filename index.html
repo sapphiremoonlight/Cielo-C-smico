@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cielo Cósmico ✨</title>
+
+    <!-- Core Styles -->
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/themes.css">
+    <link rel="stylesheet" href="styles/music.css">
+     <link rel="stylesheet" href="styles/logs.css">
+</head>
+
+<body>
+    <div class="app-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <h1 class="app-title">Cielo Cósmico</h1>
+            <p class="tagline">Tu viaje del español ✨</p>
+
+            <nav class="nav">
+                <button class="nav-btn active" data-tab="dashboard">Dashboard</button>
+                <button class="nav-btn" data-tab="weekly">Weekly Plan</button>
+                <button class="nav-btn" data-tab="pathway">3-Month Pathway</button>
+                <button class="nav-btn" data-tab="logs">Daily Logs</button>
+                <button class="nav-btn" data-tab="music">Análisis de Música</button>
+                <button class="nav-btn" data-tab="flashcards">Flashcards</button>
+                <button class="nav-btn" data-tab="tests">Test Maker</button>
+                <button class="nav-btn" data-tab="gamification">Gamification</button>
+            </nav>
+
+            <!-- THEME SWITCHER -->
+            <div class="theme-switcher">
+                <h3>Themes</h3>
+                <select id="themeSelect">
+                    <option value="emerald">Emerald Cosmos</option>
+                    <option value="mint">Mint Galaxy</option>
+                    <option value="jade">Moonlit Jade</option>
+                    <option value="sunset">Evergreen Sunset</option>
+                    <option value="noir">Cosmic Noir</option>
+                </select>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="content">
+            <div id="tabContent" class="tab-container">
+                <h2>Welcome to Cielo Cósmico ✨</h2>
+           </div>
+        </main>
+    </div>
+    <script src="scripts/script.js"></script>
+    <script src="scripts/music.js"></script>
+</body>
+</html>
