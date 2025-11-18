@@ -36,12 +36,35 @@ navBtns.forEach(btn => {
 });
 
 // -----------------------------
-// Load initial active tab
+// Load initial active tab with setup
 // -----------------------------
 const activeBtn = document.querySelector(".nav-btn.active");
 if (activeBtn) {
-    activeBtn.click();
+    const tabName = activeBtn.dataset.tab;
+
+    fetch(`tabs/${tabName}.html`)
+        .then(r => {
+            if (!r.ok) throw new Error(`Failed to load tabs/${tabName}.html`);
+            return r.text();
+        })
+        .then(html => {
+            tabContent.innerHTML = html;
+            tabContent.classList.add("fade-in");
+            setTimeout(() => tabContent.classList.remove("fade-in"), 500);
+
+            // Run tab-specific setup immediately
+            if (tabName === "weekly") setupWeekly();       // unchanged
+            if (tabName === "pathway") setupPathway();     // unchanged
+            if (tabName === "tests") setupTests();         // fixes your test list display
+            if (tabName === "flashcards") setupFlashcards(); // unchanged
+            if (tabName === "gamification") setupGamification();
+        })
+        .catch(err => {
+            tabContent.innerHTML = `<p style="color:red;">${err}</p>`;
+            console.error(err);
+        });
 }
+
 
 // -----------------------------
 // THEME SWITCHING
