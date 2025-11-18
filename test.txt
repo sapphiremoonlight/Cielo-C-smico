@@ -1,0 +1,131 @@
+Test Title: Spanish Vocabulary Quiz
+Subtitle: Basic Spanish Vocabulary Practice
+Number of Questions: 5
+Test Type: Multiple Choice
+Timer: 15 minutes
+
+---
+
+### Question 1
+
+Question Text: What is the Spanish word for "apple"?
+
+Option A: Manzana
+Option B: Banana
+Option C: Uva
+Option D: Naranja
+Correct Answer: A
+
+---
+
+### Question 2
+
+Question Text: How do you say "dog" in Spanish?
+
+Option A: Gato
+Option B: Perro
+Option C: Pez
+Option D: Pájaro
+Correct Answer: B
+
+---
+
+### Question 3
+
+Question Text: What is the Spanish translation for "house"?
+
+Option A: Casa
+Option B: Escuela
+Option C: Silla
+Option D: Ventana
+Correct Answer: A
+
+---
+
+### Question 4
+
+Question Text: How do you say "thank you" in Spanish?
+
+Option A: Gracias
+Option B: Por favor
+Option C: Adiós
+Option D: Hola
+Correct Answer: A
+
+---
+
+### Question 5
+
+Question Text: What is the Spanish word for "book"?
+
+Option A: Libro
+Option B: Mesa
+Option C: Coche
+Option D: Comida
+Correct Answer: A
+
+Question 6
+
+Question Text: What is the Spanish word for "orange"?
+
+Option A: Limón
+
+Option B: Uva
+
+Option C: Naranja
+
+Option D: Manzana
+Correct Answer: C
+
+Question 7
+
+Question Text: How do you say "bookstore" in Spanish?
+
+Option A: Biblioteca
+
+Option B: Librería
+
+Option C: Escuela
+
+Option D: Café
+Correct Answer: B
+
+Question 8
+
+Question Text: What is the Spanish word for "friend"?
+
+Option A: Amigo
+
+Option B: Hermano
+
+Option C: Madre
+
+Option D: Hija
+Correct Answer: A
+
+Question 9
+
+Question Text: How do you say "food" in Spanish?
+
+Option A: Comida
+
+Option B: Bebida
+
+Option C: Pan
+
+Option D: Verdura
+Correct Answer: A
+
+Question 10
+
+Question Text: What is the Spanish translation for "school"?
+
+Option A: Escuela
+
+Option B: Hospital
+
+Option C: Oficina
+
+Option D: Tienda
+Correct Answer: A
+

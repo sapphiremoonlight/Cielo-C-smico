@@ -1,0 +1,216 @@
+/* ------------------------------
+   BASIC RESET & FONTS
+--------------------------------*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.5s, color 0.5s;
+}
+
+/* ---------------------------------------
+   THEME VARIABLES
+--------------------------------------*/
+
+/* Default: Emerald Cosmos */
+:root {
+    --bg: #0a1f17;
+    --sidebar: #0e694b;
+    --text: #e7fbee;
+    --text-light: #c8f2d9;
+    --accent: #9ef0c0;
+    --button: #3d7e6a;
+    --button-text: #eafff4;
+    --card-bg: rgba(57, 137, 97, 0.85);
+}
+
+/* Mint Galaxy */
+.theme-mint {
+    --bg: #bfffe0;
+    --sidebar: #a6f2cf;
+    --text: #42a37c;
+    --text-light: #54e0a8;
+    --accent: #26d28b;
+    --button: #06cc80;
+    --button-text: #eafff4;
+    --card-bg: rgba(34, 200, 133, 0.85);
+}
+
+/* Moonlit Jade */
+.theme-jade {
+    --bg: #071612;
+    --sidebar: #0d2a24;
+    --text: #dffaf0;
+    --text-light: #a8e9d1;
+    --accent: #7fffd4;
+    --button: #114840;
+    --button-text: #dffaf0;
+    --card-bg: rgba(0, 100, 45, 0.85);
+}
+
+/* Evergreen Sunset */
+.theme-sunset {
+    --bg: #16321f;
+    --sidebar: #45915e;
+    --text: #f6ffe9;
+    --text-light: #f9ffdd;
+    --accent: #f4c86c;
+    --button: #226833;
+    --button-text: #fffce9;
+    --card-bg: rgba(50, 80, 40, 0.85);
+}
+
+/* Cosmic Noir */
+.theme-noir {
+    --bg: #000;
+    --sidebar: #0a0f0b;
+    --text: #c2ffdf;
+    --text-light: #96ffcf;
+    --accent: #87cbab;
+    --button: #107043;
+    --button-text: #c2ffdf;
+    --card-bg: rgba(0, 255, 128, 0.15);
+}
+
+.inputField {
+    padding: 12px;
+    margin: 8px 0;
+    width: 100%;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.inputField:focus {
+    border-color: var(--accent);
+    outline: none;
+}
+
+.btn {
+    padding: 12px 20px;
+    background-color: var(--button);
+    color: var(--button-text);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: darken(var(--button), 10%);
+}
+
+.delete-btn {
+    background-color: #c32a2a;
+}
+
+.delete-btn:hover {
+    background-color: #c32a2a;
+}
+
+.form-section {
+    padding: 20px;
+    background-color: var(--button);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+}
+
+#songListSection {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.songs-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.song-card {
+    width: 150px;
+    text-align: center;
+    cursor: pointer;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.song-card img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.song-card:hover {
+    transform: scale(1.05);
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: var(--sidebar);
+    padding: 20px;
+    border-radius: 10px;
+    color: var(--text-light);
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: var(--text-light);
+    font-size: 30px;
+    cursor: pointer;
+}
+
+/* Lighten hover effect */
+@keyframes lighten {
+    0% {
+        background-color: var(--button);
+    }
+    100% {
+        background-color: #40b97f; /* A manually adjusted lighter version of the button color */
+    }
+}
+
+/* Button hover effect */
+.btn:hover {
+    background-color: #40b97f; /* Lighter shade for hover */
+}
+
+/* Song Card Hover Effect */
+.song-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}

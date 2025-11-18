@@ -1,0 +1,50 @@
+   <!-- Test Creation Section -->
+    <div id="test-creation">
+        <h1>Create a New Test</h1>
+
+        <!-- Test Title & Subtitle -->
+        <div class="input-group">
+            <label for="test-title">Test Title</label>
+            <input type="text" id="test-title" placeholder="Enter test title">
+        </div>
+        <div class="input-group">
+            <label for="test-subtitle">Subtitle (Optional)</label>
+            <input type="text" id="test-subtitle" placeholder="Enter a subtitle">
+        </div>
+
+        <!-- Question Count -->
+        <div class="input-group">
+            <label for="question-count">Number of Questions</label>
+            <select id="question-count">
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+                <option value="30">30</option>
+            </select>
+        </div>
+
+        <!-- Test Type -->
+        <div class="input-group">
+            <label for="test-type">Test Type</label>
+            <select id="test-type">
+                <option value="multiple-choice">Multiple Choice</option>
+                <option value="matching">Match Word with Definition</option>
+                <option value="written">Written Test</option>
+            </select>
+        </div>
+
+        <!-- Timer -->
+        <div class="input-group">
+            <label for="test-timer">Set Timer (Minutes)</label>
+            <input type="number" id="test-timer" min="1" max="60" placeholder="Minutes">
+        </div>
+
+        <!-- Question List Section (This will dynamically generate based on the selected question count) -->
+        <div id="question-list"></div>
+
+        <!-- Create Test Button -->
+        <div class="action-buttons">
+            <button id="create-test-btn">Create Test</button>
+        </div>
+    </div>

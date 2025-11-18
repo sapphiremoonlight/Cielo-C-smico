@@ -1,0 +1,37 @@
+<!-- Main log content area -->
+<div class="logs-content">
+    <!-- New Entry Form -->
+    <div class="log-entry">
+        <h3>Today’s Progress</h3>
+        <p><strong>What I learned today:</strong></p>
+        <textarea id="learnedToday" placeholder="Write about your practice session, new words, or grammar concepts learned."></textarea>
+    </div>
+
+    <div class="log-entry">
+        <h3>Daily Reflection</h3>
+        <p><strong>How I feel about today's learning:</strong></p>
+        <textarea id="dailyReflection" placeholder="Write a brief reflection on how you felt about your learning today."></textarea>
+    </div>
+
+    <div class="log-entry">
+        <h3>Vocabulary and Grammar</h3>
+        <p><strong>New Words & Grammar:</strong></p>
+        <textarea id="vocabularyGrammar" placeholder="Add new vocabulary or grammar points you've learned."></textarea>
+    </div>
+
+    <div class="log-entry">
+        <h3>Goals for Tomorrow</h3>
+        <p><strong>Next steps:</strong></p>
+        <textarea id="goalsTomorrow" placeholder="Write down what you plan to focus on tomorrow."></textarea>
+    </div>
+
+    <button id="saveLog">Save Log</button>
+
+    <!-- Filter Logs -->
+    <div>
+        <input type="text" id="filterInput" placeholder="Filter by keyword..." oninput="filterLogs()">
+    </div>
+
+    <!-- Log entries display -->
+    <div id="logsList"></div>
+</div>

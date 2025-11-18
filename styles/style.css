@@ -1,0 +1,891 @@
+/* ------------------------------
+   BASIC RESET & FONTS
+--------------------------------*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.5s, color 0.5s;
+}
+
+/* ---------------------------------------
+   THEME VARIABLES
+--------------------------------------*/
+
+/* Default: Emerald Cosmos */
+:root {
+    --bg: #0a1f17;
+    --sidebar: #0e694b;
+    --text: #e7fbee;
+    --text-light: #c8f2d9;
+    --accent: #9ef0c0;
+    --button: #3d7e6a;
+    --button-text: #eafff4;
+    --card-bg: rgba(57, 137, 97, 0.85);
+}
+
+/* Mint Galaxy */
+.theme-mint {
+    --bg: #bfffe0;
+    --sidebar: #a6f2cf;
+    --text: #42a37c;
+    --text-light: #54e0a8;
+    --accent: #26d28b;
+    --button: #06cc80;
+    --button-text: #eafff4;
+    --card-bg: rgba(34, 200, 133, 0.85);
+}
+
+/* Moonlit Jade */
+.theme-jade {
+    --bg: #071612;
+    --sidebar: #0d2a24;
+    --text: #dffaf0;
+    --text-light: #a8e9d1;
+    --accent: #7fffd4;
+    --button: #114840;
+    --button-text: #dffaf0;
+    --card-bg: rgba(0, 100, 45, 0.85);
+}
+
+/* Evergreen Sunset */
+.theme-sunset {
+    --bg: #16321f;
+    --sidebar: #45915e;
+    --text: #f6ffe9;
+    --text-light: #f9ffdd;
+    --accent: #f4c86c;
+    --button: #226833;
+    --button-text: #fffce9;
+    --card-bg: rgba(50, 80, 40, 0.85);
+}
+
+/* Cosmic Noir */
+.theme-noir {
+    --bg: #000;
+    --sidebar: #0a0f0b;
+    --text: #c2ffdf;
+    --text-light: #96ffcf;
+    --accent: #87cbab;
+    --button: #107043;
+    --button-text: #c2ffdf;
+    --card-bg: rgba(0, 255, 128, 0.15);
+}
+
+/* ------------------------------
+   LAYOUT
+--------------------------------*/
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 270px;
+    padding: 25px;
+    background: var(--sidebar);
+    border-right: 2px solid var(--accent);
+    display: flex;
+    flex-direction: column;
+}
+
+.app-title {
+    color: var(--text);
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+.tagline {
+    opacity: 0.8;
+    margin-bottom: 25px;
+    color: var(--text-light);
+}
+
+/* NAVIGATION */
+.nav-btn {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 8px;
+    border: none;
+    background: var(--button);
+    color: var(--button-text);
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.nav-btn:hover {
+    background: var(--accent);
+    color: var(--bg);
+}
+
+.nav-btn.active {
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: bold;
+}
+
+/* MAIN CONTENT */
+.content {
+    flex: 1;
+    padding: 40px;
+}
+
+.tab-container {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.25);
+}
+
+/* THEME SWITCHER */
+.theme-switcher {
+    margin-top: auto;
+}
+
+#themeSelect {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    background: var(--button);
+    color: var(--button-text);
+    border: none;
+    margin-top: 6px;
+}
+
+/* ANIMATION */
+.fade-in {
+    animation: fadeIn 0.45s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* WEEKLY PLAN STYLES */
+
+.weekly-wrapper {
+    animation: fadeIn 0.4s ease;
+}
+
+.weekly-progress {
+    width: 100%;
+    height: 14px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 15px 0;
+    border: 1px solid var(--accent);
+}
+
+#weeklyProgressFill {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    transition: 0.5s ease;
+}
+
+.progress-label {
+    font-size: 14px;
+    opacity: 0.85;
+    margin-bottom: 20px;
+}
+
+.weekly-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.day-card {
+    padding: 20px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--accent);
+    box-shadow: 0 0 10px rgba(0,0,0,0.35);
+    transition: 0.3s;
+    position: relative;
+}
+
+.day-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 18px rgba(0,0,0,0.45);
+    border-color: var(--accent);
+}
+
+.day-card h3 {
+    margin-bottom: 3px;
+    color: var(--accent);
+}
+
+.day-sub {
+    font-size: 13px;
+    opacity: 0.85;
+    margin-bottom: 14px;
+}
+
+.day-card label {
+    display: block;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.day-card input[type="checkbox"] {
+    accent-color: var(--accent);
+    margin-right: 8px;
+    transform: scale(1.15);
+    cursor: pointer;
+}
+
+/* ----------------------------------------
+   3-MONTH PATHWAY STYLES
+----------------------------------------- */
+
+.pathway-wrapper {
+    animation: fadeIn 0.45s ease;
+}
+
+.overall-box {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--accent);
+    margin-bottom: 25px;
+}
+
+.overall-progress {
+    width: 100%;
+    height: 16px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--accent);
+    margin-top: 8px;
+}
+
+#overallProgressFill {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    transition: 0.5s ease;
+}
+
+.overall-label {
+    opacity: 0.8;
+    margin-top: 6px;
+}
+
+.month {
+    display: grid;
+    gap: 25px;
+}
+
+.month-card {
+    padding: 22px;
+    background: var(--card-bg);
+    border-radius: 14px;
+    border: 1px solid var(--accent);
+    box-shadow: 0 0 15px rgba(0,0,0,0.35);
+    transition: 0.3s;
+}
+
+.month-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 20px rgba(0,0,0,0.45);
+}
+
+.month-sub {
+    font-size: 14px;
+    opacity: 0.85;
+    margin-bottom: 14px;
+}
+
+.month-progress {
+    width: 100%;
+    height: 14px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+
+.month-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    transition: 0.45s ease;
+}
+
+.month-label {
+    font-size: 14px;
+    opacity: 0.85;
+    margin-bottom: 14px;
+}
+
+.task-list label {
+    display: block;
+    margin: 6px 0;
+}
+
+.path-task {
+    accent-color: var(--accent);
+    margin-right: 8px;
+    transform: scale(1.15);
+}
+
+/* ========================
+        T E S T S
+========================== */
+
+h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: var(--accent);
+}
+
+/* ---------------------------------------
+   CREATE TEST SECTION
+---------------------------------------*/
+
+#test-creation {
+    width: 100%;
+    max-width: 800px;
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+#test-creation h2 {
+    margin-bottom: 20px;
+    color: var(--accent);
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: var(--text-light);
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+.input-group input[type="number"] {
+    width: 50%;
+}
+
+.input-group select {
+    padding: 8px;
+}
+
+/* Create Test Button */
+#test-creation .action-buttons button {
+    background-color: var(--button);
+    color: var(--button-text);
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#test-creation .action-buttons button:hover {
+    background-color: darken(var(--button), 10%);
+}
+
+/* ---------------------------------------
+   TEST LIST SECTION
+---------------------------------------*/
+
+#test-list {
+    width: 100%;
+    max-width: 800px;
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#test-list h2 {
+    margin-bottom: 20px;
+    color: var(--accent);
+}
+
+.search-sort {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+#search-tests {
+    width: 65%;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+#sort-options {
+    padding: 8px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+/* Test List Items */
+.test-item {
+    background-color: var(--card-bg);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.test-details {
+    width: 70%;
+}
+
+.test-details h3 {
+    font-size: 1.3rem;
+    margin: 0;
+    color: var(--accent);
+}
+
+.test-details p {
+    margin: 5px 0;
+    color: var(--text-light);
+}
+
+.test-actions button {
+    background-color: var(--button);
+    color: var(--button-text);
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 10px;
+}
+
+.test-actions button:hover {
+    background-color: darken(var(--button), 10%);
+}
+
+/* ---------------------------------------
+   TEST TAKING SECTION
+---------------------------------------*/
+
+#test-taking {
+    width: 100%;
+    max-width: 800px;
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: none; /* Initially hidden */
+}
+
+#test-taking h2 {
+    margin-bottom: 20px;
+    color: var(--accent);
+}
+
+#timer {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: var(--text-light);
+}
+
+#question-container {
+    margin-bottom: 30px;
+}
+
+.question {
+    margin-bottom: 25px;
+}
+
+.question p {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    margin-bottom: 15px;
+}
+
+.answers label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: var(--text-light);
+}
+
+/* Submit Button */
+#test-taking .action-buttons button {
+    background-color: var(--button);
+    color: var(--button-text);
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#test-taking .action-buttons button:hover {
+    background-color: darken(var(--button), 10%);
+}
+
+#test-result {
+    width: 100%;
+    max-width: 800px;
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: none; /* Initially hidden */
+}
+
+#test-result h2 {
+    margin-bottom: 20px;
+    color: var(--accent);
+}
+
+#test-result p {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    margin-bottom: 15px;
+}
+
+/* ========================
+    FLASHCARDS (THEME-AWARE)
+========================== */
+
+.flashcards-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.flashcards-wrapper h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 5px;
+    color: var(--text);
+}
+
+.flashcards-wrapper p {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--text-light);
+    font-size: 1rem;
+}
+
+.flashcard-container {
+    perspective: 1000px;
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.flashcard {
+    width: 300px;
+    height: 180px;
+    border-radius: 16px;
+    background-color: var(--card-bg);
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: transform 0.6s, box-shadow 0.3s;
+    transform-style: preserve-3d;
+    position: relative;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+}
+
+.flashcard:hover {
+    box-shadow: 0 10px 24px rgba(0,0,0,0.3);
+}
+
+.flashcard .front,
+.flashcard .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    padding: 10px;
+    text-align: center;
+}
+
+.flashcard .front {
+    background-color: var(--card-bg);
+}
+
+.flashcard .back {
+    transform: rotateY(180deg);
+    background-color: var(--accent);
+    color: var(--bg);
+}
+
+.flashcard-controls {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.flashcard-controls button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--button);
+    color: var(--button-text);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.flashcard-controls button:hover {
+    background-color: var(--accent);
+    color: var(--bg);
+}
+
+.flashcard-add {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.flashcard-add input {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    min-width: 120px;
+}
+
+.flashcard-add button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--button);
+    color: var(--button-text);
+    cursor: pointer;
+}
+
+.flashcard-add button:hover {
+    background-color: var(--accent);
+    color: var(--bg);
+}
+
+.flashcard.flipped {
+    transform: rotateY(180deg);
+}
+
+.mini-flashcard {
+    width: 100px;
+    height: 60px;
+    margin: 5px;
+    margin-top: 15px;
+    perspective: 600px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.mini-flashcard .mini-front,
+.mini-flashcard .mini-back {
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    position: absolute;
+    text-align: center;
+    line-height: 60px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 12px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.mini-flashcard .mini-back {
+    transform: rotateY(180deg);
+    background: #f0f0f0;
+}
+
+.mini-flashcard.flipped .mini-front {
+    transform: rotateY(180deg);
+}
+.mini-flashcard.flipped .mini-back {
+    transform: rotateY(0deg);
+}
+
+/* ------------------------
+   Dashboard Styling
+------------------------ */
+
+/* Wrapper for the entire dashboard */
+.dashboard-wrapper {
+    padding: 20px;
+    background-color: var(--bg);
+    color: var(--text);
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.4s ease;
+}
+
+/* Title and subtext */
+.dashboard-wrapper h2 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: var(--text-light);
+    margin-bottom: 10px;
+}
+
+.dashboard-wrapper p {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    margin-bottom: 20px;
+}
+
+/* Section containers */
+.dashboard-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-section h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 15px;
+}
+
+/* Progress Bar */
+.progress-bar {
+    width: 100%;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--accent);
+    transition: width 0.5s ease;
+}
+
+#weeklyProgressText, #overallProgressText {
+    font-size: 1rem;
+    color: var(--text-light);
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+/* Flashcards and Test Summary */
+.dashboard-section p {
+    font-size: 1rem;
+    color: var(--text-light);
+}
+
+.dashboard-section span {
+    font-weight: bold;
+    color: var(--accent);
+}
+
+/* Gamification Section */
+.gamification-summary p {
+    font-size: 1rem;
+    color: var(--text-light);
+}
+
+.gamification-summary span {
+    font-weight: bold;
+    color: var(--accent);
+}
+
+/* Animation for fade-in */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Weekly Progress Styling */
+.theme-mint .dashboard-wrapper {
+    animation: fadeIn 0.4s ease;
+}
+
+.theme-mint .progress-bar {
+    background-color: rgba(255, 255, 255, 0.2); /* Subtle lighter background for progress bars */
+}
+
+.theme-mint .progress-fill {
+    background-color: var(--accent); /* Using mint green as the progress color */
+}
+
+.theme-mint #weeklyProgressText,
+.theme-mint #overallProgressText {
+    color: var(--text-light); /* Text color for progress stats */
+}
+
+.theme-mint .dashboard-section {
+    background-color: rgba(0, 100, 60, 0.85); /* Card background with a mint hue */
+}
+
+.theme-mint .dashboard-section h3 {
+    color: var(--accent); /* Accent color for headings */
+}
+
+.theme-mint .dashboard-section p {
+    color: var(--text-light); /* Lighter text for the body */
+}
+
+.theme-mint .dashboard-section span {
+    color: var(--accent); /* Bold accent color for stats */
+}

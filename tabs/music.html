@@ -1,0 +1,41 @@
+<div id="musicTab" class="tab-content">
+    <!-- Add New Song Section -->
+    <div id="addSongSection" class="form-section">
+        <h2>Añadir Nueva Canción</h2>
+        <form id="songForm">
+            <input type="text" id="songTitle" placeholder="Título de la canción" class="inputField">
+            <input type="text" id="songArtist" placeholder="Artista" class="inputField">
+            <input type="file" id="albumCover" accept="image/*" class="inputField">
+            <button type="button" onclick="addSong()" class="btn">Guardar Canción</button>
+        </form>
+    </div>
+
+    <!-- Song List Section -->
+    <div id="songListSection" class="form-section">
+        <h2>Lista de Canciones</h2>
+        <input type="text" id="songFilter" placeholder="Filtrar Canciones..." oninput="filterSongs()" class="inputField">
+        <div id="songsContainer" class="songs-container">
+            <!-- Song cards will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <!-- Song Detail Modal -->
+    <div id="songDetailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Detalles de la Canción</h2>
+            <div id="songDetails"></div>
+            <h3>Responde las preguntas</h3>
+            <form id="songDetailForm">
+                <input type="text" id="theme" placeholder="¿Cuál es el tema principal o mensaje de la canción?" class="inputField">
+                <input type="text" id="emotion" placeholder="¿Qué emociones evoca la canción?" class="inputField">
+                <input type="text" id="lyrics" placeholder="¿Cuál es el contenido de las letras?" class="inputField">
+                <input type="text" id="structure" placeholder="¿Cuál es la estructura de la canción?" class="inputField">
+                <input type="text" id="interpretation" placeholder="¿Cuál es tu interpretación personal y conexión con la canción?" class="inputField">
+                <button type="button" onclick="saveSongDetails()" class="btn">Guardar Respuestas</button>
+            </form>
+            <button type="button" onclick="editSong()" class="btn">Editar Canción</button>
+            <button type="button" onclick="deleteSong()" class="btn delete-btn">Eliminar Canción</button>
+        </div>
+    </div>
+</div>

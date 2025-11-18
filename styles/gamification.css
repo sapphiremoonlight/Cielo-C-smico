@@ -1,0 +1,187 @@
+/* ------------------------------
+   BASIC RESET & FONTS
+--------------------------------*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.5s, color 0.5s;
+}
+
+/* ---------------------------------------
+   THEME VARIABLES
+--------------------------------------*/
+
+/* Default: Emerald Cosmos */
+:root {
+    --bg: #0a1f17;
+    --sidebar: #0e694b;
+    --text: #e7fbee;
+    --text-light: #c8f2d9;
+    --accent: #9ef0c0;
+    --button: #3d7e6a;
+    --button-text: #eafff4;
+    --card-bg: rgba(57, 137, 97, 0.85);
+}
+
+/* Mint Galaxy */
+.theme-mint {
+    --bg: #bfffe0;
+    --sidebar: #a6f2cf;
+    --text: #42a37c;
+    --text-light: #54e0a8;
+    --accent: #26d28b;
+    --button: #06cc80;
+    --button-text: #eafff4;
+    --card-bg: rgba(34, 200, 133, 0.85);
+}
+
+/* Moonlit Jade */
+.theme-jade {
+    --bg: #071612;
+    --sidebar: #0d2a24;
+    --text: #dffaf0;
+    --text-light: #a8e9d1;
+    --accent: #7fffd4;
+    --button: #114840;
+    --button-text: #dffaf0;
+    --card-bg: rgba(0, 100, 45, 0.85);
+}
+
+/* Evergreen Sunset */
+.theme-sunset {
+    --bg: #16321f;
+    --sidebar: #45915e;
+    --text: #f6ffe9;
+    --text-light: #f9ffdd;
+    --accent: #f4c86c;
+    --button: #226833;
+    --button-text: #fffce9;
+    --card-bg: rgba(50, 80, 40, 0.85);
+}
+
+/* Cosmic Noir */
+.theme-noir {
+    --bg: #000;
+    --sidebar: #0a0f0b;
+    --text: #c2ffdf;
+    --text-light: #96ffcf;
+    --accent: #87cbab;
+    --button: #107043;
+    --button-text: #c2ffdf;
+    --card-bg: rgba(0, 255, 128, 0.15);
+}
+
+/* ------------------------
+   GAMIFICATION STYLES
+------------------------ */
+
+/* Wrapper for the gamification section */
+.gamification-wrapper {
+    padding: 30px;
+    background-color: var(--bg);
+    color: var(--text);
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+    animation: fadeIn 0.4s ease;
+}
+
+/* Title and description for the gamification tab */
+.gamification-wrapper .tab-title {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 10px;
+}
+
+.gamification-wrapper .tab-desc {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    margin-bottom: 25px;
+}
+
+/* Stats Section (Points, Level, Streak) */
+.gamification-wrapper .stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+    color: var(--text-light);
+}
+
+.gamification-wrapper .stats p {
+    font-weight: 500;
+}
+
+.gamification-wrapper .stats span {
+    font-weight: bold;
+    color: var(--accent);
+}
+
+/* Badges Section */
+.gamification-wrapper .badges {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Badges List */
+.gamification-wrapper .badge-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* Single Badge Styling */
+.badge {
+    display: inline-block;
+    padding: 15px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    text-align: center;
+    width: 80px;
+    height: 80px;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 55px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+/* Badge Hover Effects */
+.badge:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Badge Text Styling */
+.badge span {
+    display: block;
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+/* Badge Active (Unlocked) Styling */
+.badge.active {
+    background-color: var(--button); /* Lighter shade of the button color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
