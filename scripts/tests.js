@@ -30,6 +30,7 @@ function createTest() {
     const questionCount = document.getElementById('question-count').value;
     const testType = document.getElementById('test-type').value;
     const testTimer = document.getElementById('test-timer').value;
+    const testListDiv = document.getElementById('test-list-container');
 
     // Validate that the test title and question count are provided
     if (!testTitle || !questionCount) {
