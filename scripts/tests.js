@@ -1,144 +1,130 @@
-// Holds all tests
-let testList = [];
+/* ----------------------------------------------------
+   Load Tests from LocalStorage
+---------------------------------------------------- */
+let tests = JSON.parse(localStorage.getItem("tests")) || [];
 
-document.addEventListener('DOMContentLoaded', () => {
-    setupTests();
-    loadTestsFromLocalStorage();
-});
-
-// Set up listeners
-function setupTests() {
-    document.getElementById('create-test-btn').addEventListener('click', createTest);
-    document.getElementById('question-count').addEventListener('change', updateQuestionFields);
-
-    // refresh filtering on input
-    document.getElementById('search-tests').addEventListener('input', displayTestList);
-    document.getElementById('sort-options').addEventListener('change', displayTestList);
+// Save tests back to localStorage
+function saveTests() {
+    localStorage.setItem("tests", JSON.stringify(tests));
 }
 
-// Load saved tests
-function loadTestsFromLocalStorage() {
-    const saved = localStorage.getItem('testList');
-    if (saved) {
-        testList = JSON.parse(saved);
-        displayTestList();
-    }
+/* ----------------------------------------------------
+   Render All Tests
+---------------------------------------------------- */
+function renderTests() {
+    const container = document.getElementById("test-list-container");
+    container.innerHTML = "";
+
+    tests.forEach((test, index) => {
+        const item = document.createElement("div");
+        item.classList.add("test-item", "fade-in");
+
+        item.innerHTML = `
+            <h3>${test.title}</h3>
+            <p>${test.subtitle || ""}</p>
+            <p><strong>Type:</strong> ${test.type}</p>
+            <p><strong>Questions:</strong> ${test.questionCount}</p>
+            <p><strong>Timer:</strong> ${test.timer} min</p>
+
+            <button class="edit-btn" data-index="${index}">✏️ Edit</button>
+            <button class="delete-btn" data-index="${index}">🗑 Delete</button>
+        `;
+
+        container.appendChild(item);
+    });
 }
 
-// Create a test
-function createTest() {
-    const title = document.getElementById('test-title').value;
-    const subtitle = document.getElementById('test-subtitle').value;
-    const questionCount = document.getElementById('question-count').value;
-    const type = document.getElementById('test-type').value;
-    const timer = document.getElementById('test-timer').value;
-
-    if (!title || !questionCount) {
-        alert("Please fill in the required fields.");
+/* ----------------------------------------------------
+   Create New Test
+---------------------------------------------------- */
+document.getElementById("create-test-btn").addEventListener("click", () => {
+    const title = document.getElementById("test-title").value.trim();
+    if (!title) {
+        alert("Please enter a test title.");
         return;
     }
 
     const newTest = {
-        id: Date.now(),
         title,
-        subtitle,
-        questionCount,
-        type,
-        timer,
-        questions: []
+        subtitle: document.getElementById("test-subtitle").value,
+        questionCount: document.getElementById("question-count").value,
+        type: document.getElementById("test-type").value,
+        timer: document.getElementById("test-timer").value,
+        dateCreated: Date.now()
     };
 
-    testList.push(newTest);
-    localStorage.setItem('testList', JSON.stringify(testList));
+    tests.push(newTest);
+    saveTests();
+    renderTests();
 
-    displayTestList();
-    updateQuestionFields();
+    highlightCreated();
 
-    document.getElementById('test-title').value = '';
-    document.getElementById('test-subtitle').value = '';
-    document.getElementById('test-timer').value = '';
-    document.getElementById('question-count').value = 10;
-    document.getElementById('test-type').value = 'multiple-choice';
+    // Optional: clear fields
+    document.getElementById("test-title").value = "";
+    document.getElementById("test-subtitle").value = "";
+    document.getElementById("test-timer").value = "";
+});
 
-    alert("Test created!");
-}
+/* ----------------------------------------------------
+   Edit + Delete (Event Delegation)
+---------------------------------------------------- */
+document.getElementById("test-list-container").addEventListener("click", (e) => {
+    const index = e.target.dataset.index;
+    if (index === undefined) return;
 
-// Generate question inputs
-function updateQuestionFields() {
-    const questionCount = parseInt(document.getElementById('question-count').value);
-    const type = document.getElementById('test-type').value;
-    const wrapper = document.getElementById('question-list');
+    /* ----- DELETE ----- */
+    if (e.target.classList.contains("delete-btn")) {
+        const confirmed = confirm("Are you sure you want to delete this test?");
+        if (!confirmed) return;
 
-    wrapper.innerHTML = '';
+        // Fade-out animation BEFORE removing
+        const item = e.target.closest(".test-item");
+        item.classList.add("fade-out");
 
-    for (let i = 1; i <= questionCount; i++) {
-        let div = document.createElement('div');
-        div.classList.add('question');
+        setTimeout(() => {
+            tests.splice(index, 1);
+            saveTests();
+            renderTests();
+        }, 300);
 
-        div.innerHTML = `
-            <h2>Question ${i}</h2>
-            <div class="input-group">
-                <label>Question Text</label>
-                <input type="text" id="question-text-${i}">
-            </div>
-        `;
-
-        if (type === "multiple-choice") {
-            div.innerHTML += `
-                <div class="input-group"><label>A</label><input id="answer-A-${i}"><input type="radio" name="correct-answer-${i}" value="A"> Correct</div>
-                <div class="input-group"><label>B</label><input id="answer-B-${i}"><input type="radio" name="correct-answer-${i}" value="B"> Correct</div>
-                <div class="input-group"><label>C</label><input id="answer-C-${i}"><input type="radio" name="correct-answer-${i}" value="C"> Correct</div>
-                <div class="input-group"><label>D</label><input id="answer-D-${i}"><input type="radio" name="correct-answer-${i}" value="D"> Correct</div>
-            `;
-        } else {
-            div.innerHTML += `
-                <div class="input-group">
-                    <label>Answer</label>
-                    <input id="answer-${i}">
-                </div>
-            `;
-        }
-
-        wrapper.appendChild(div);
+        return;
     }
+
+    /* ----- EDIT ----- */
+    if (e.target.classList.contains("edit-btn")) {
+        const t = tests[index];
+
+        document.getElementById("test-title").value = t.title;
+        document.getElementById("test-subtitle").value = t.subtitle;
+        document.getElementById("question-count").value = t.questionCount;
+        document.getElementById("test-type").value = t.type;
+        document.getElementById("test-timer").value = t.timer;
+
+        // Remove old version (will be replaced on save)
+        tests.splice(index, 1);
+        saveTests();
+        renderTests();
+
+        highlightCreated();
+    }
+});
+
+/* ----------------------------------------------------
+   Animations
+---------------------------------------------------- */
+
+// Highlight newly created/edited items
+function highlightCreated() {
+    const items = document.querySelectorAll(".test-item");
+    if (items.length === 0) return;
+
+    const lastItem = items[items.length - 1];
+    lastItem.classList.add("highlight");
+
+    setTimeout(() => lastItem.classList.remove("highlight"), 1000);
 }
 
-// Display tests properly
-function displayTestList() {
-    const container = document.getElementById('test-list-container');
-    const search = document.getElementById('search-tests').value.toLowerCase();
-    const sort = document.getElementById('sort-options').value;
-
-    let list = testList.filter(t => t.title.toLowerCase().includes(search));
-
-    if (sort === 'alpha-asc') list.sort((a,b)=>a.title.localeCompare(b.title));
-    if (sort === 'alpha-desc') list.sort((a,b)=>b.title.localeCompare(a.title));
-    if (sort === 'date-asc') list.sort((a,b)=>a.id - b.id);
-    if (sort === 'date-desc') list.sort((a,b)=>b.id - a.id);
-    if (sort === 'type') list.sort((a,b)=>a.type.localeCompare(b.type));
-
-    container.innerHTML = "";
-
-    list.forEach(test => {
-        const div = document.createElement('div');
-        div.classList.add('test-item');
-        div.dataset.testId = test.id;
-
-        div.innerHTML = `
-            <div class="test-details">
-                <h2>${test.title}</h2>
-                <p>Subtitle: ${test.subtitle || "N/A"}</p>
-                <p>Questions: ${test.questionCount}</p>
-                <p>Type: ${test.type}</p>
-            </div>
-
-            <div class="test-actions">
-                <button onclick="editTest(${test.id})">Edit</button>
-                <button onclick="deleteTest(${test.id})">Delete</button>
-                <button onclick="takeTest(${test.id})">Take Test</button>
-            </div>
-        `;
-
-        container.appendChild(div);
-    });
-}
+/* ----------------------------------------------------
+   Initial Render
+---------------------------------------------------- */
+renderTests();
