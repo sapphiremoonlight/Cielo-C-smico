@@ -1,67 +1,33 @@
-<!-- Test Creation Section -->
-<div id="test-creation">
-    <h1>Create a New Test</h1>
+<!-- ===================== TEST TAB HTML ===================== -->
 
-    <div class="input-group">
-        <label for="test-title">Test Title</label>
-        <input type="text" id="test-title" placeholder="Enter test title">
-    </div>
+<div id="tests-tab" class="tab fade-in">
+    <div class="card">
+        <h2>Test Maker ✨</h2>
+        <p>Create, edit, take, and print your Spanish tests.</p>
 
-    <div class="input-group">
-        <label for="test-subtitle">Subtitle (Optional)</label>
-        <input type="text" id="test-subtitle" placeholder="Enter a subtitle">
-    </div>
+    <!-- Test Form -->
+    <div class="test-form">
+        <input type="text" id="testTitle" placeholder="Test Title" />
+        <input type="text" id="testSubtitle" placeholder="Subtitle" />
+        <input type="number" id="testUnit" placeholder="Unit (1-6)" min="1" max="6" />
 
-   <div class="input-group">
-    <label for="question-count">Number of Questions</label>
-    <select id="question-count">
-        <option value="" disabled selected>Number of Questions</option> <!-- placeholder -->
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="15">15</option>
-        <option value="20">20</option>
-        <option value="25">25</option>
-        <option value="30">30</option>
-    </select>
-</div>
-
-    <div class="input-group">
-        <label for="test-type">Test Type</label>
-        <select id="test-type">
-            <option value="multiple-choice">Multiple Choice</option>
-            <option value="matching">Match Word with Definition</option>
+        <select id="testType">
             <option value="written">Written Test</option>
+            <option value="match">Match Column Table</option>
+            <option value="mcq">Multiple Choice</option>
         </select>
+
+        <input type="number" id="testQuestions" placeholder="Number of Questions (5-30)" min="5" max="30" />
+        <button id="createTest">Create Test</button>
     </div>
 
-    <div class="input-group">
-        <label for="test-timer">Set Timer (Minutes)</label>
-        <input type="number" id="test-timer" min="1" max="60" placeholder="Minutes">
+    <!-- Test List -->
+    <div class="tests-list">
+        <h3>Saved Tests</h3>
+        <div id="savedTests"></div>
     </div>
 
-    <div id="question-list"></div>
-
-    <div class="action-buttons">
-        <button id="create-test-btn">Create Test</button>
-    </div>
+    <!-- Question Editor / Take Test -->
+    <div id="questionEditor" style="display:none;"></div>
 </div>
-
-<!-- Test List Section -->
-<div id="test-list">
-    <h1>All Tests</h1>
-
-    <div class="search-sort">
-        <input type="text" id="search-tests" placeholder="Search tests...">
-
-        <select id="sort-options">
-            <option value="date-desc">Newest First</option>
-            <option value="date-asc">Oldest First</option>
-            <option value="alpha-asc">A-Z</option>
-            <option value="alpha-desc">Z-A</option>
-            <option value="type">By Type</option>
-        </select>
-    </div>
-
-    <!-- FIX: separate container so we don’t delete the header -->
-    <div id="test-list-container"></div>
 </div>
