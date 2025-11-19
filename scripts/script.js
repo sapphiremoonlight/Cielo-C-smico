@@ -24,6 +24,7 @@ navBtns.forEach(btn => {
                 // Setup tab-specific functionality after loading
                 if (tabName === "weekly") setupWeekly();
                 if (tabName === "pathway") setupPathway();
+                if (tabName === "conjugation") setupConjugation();
                 if (tabName === "tests") setupTests();
                 if (tabName === "flashcards") setupFlashcards();
                 if (tabName === "gamification") setupGamification();
@@ -53,10 +54,11 @@ if (activeBtn) {
             setTimeout(() => tabContent.classList.remove("fade-in"), 500);
 
             // Run tab-specific setup immediately
-            if (tabName === "weekly") setupWeekly();       // unchanged
-            if (tabName === "pathway") setupPathway();     // unchanged
-            if (tabName === "tests") setupTests();         // fixes your test list display
-            if (tabName === "flashcards") setupFlashcards(); // unchanged
+            if (tabName === "weekly") setupWeekly();      
+            if (tabName === "pathway") setupPathway();    
+            if (tabName === "conjugation") setupConjugation(); 
+            if (tabName === "tests") setupTests();        
+            if (tabName === "flashcards") setupFlashcards();
             if (tabName === "gamification") setupGamification();
         })
         .catch(err => {
