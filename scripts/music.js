@@ -1,179 +1,221 @@
+// =======================================================
+// SAFE MUSIC.JS — WORKS WITH TAB SYSTEM
+// =======================================================
+
 let songs = JSON.parse(localStorage.getItem("songs")) || [];
-let currentSongIndex = -1;  // Keeps track of the currently viewed song
+let currentSongIndex = -1;
 
-// Add new song to localStorage
-function addSong() {
-    const title = document.getElementById('songTitle').value;
-    const artist = document.getElementById('songArtist').value;
-    const albumCover = document.getElementById('albumCover').files[0];
+// --------------------
+// RUN ONLY WHEN MUSIC TAB LOADS
+// --------------------
+function setupMusic() {
+    // Make sure DOM exists BEFORE running anything
+    const container = document.getElementById("songsContainer");
 
-    if (title && artist) {
-        const reader = new FileReader();
-        reader.onload = function(event) {
-            const song = {
-                title,
-                artist,
-                albumCover: event.target.result,
-                id: Date.now(),
-                theme: '',
-                emotion: '',
-                lyrics: '',
-                structure: '',
-                interpretation: ''
-            };
-            songs.push(song);
-            localStorage.setItem("songs", JSON.stringify(songs));
-            displaySongs();
-            clearInputs();
-        };
-        if (albumCover) reader.readAsDataURL(albumCover);
-    } else {
-        alert("Por favor, complete todos los campos.");
+    if (!container) {
+        console.warn("Music tab not yet loaded.");
+        return;
     }
+
+    displaySongs();
 }
 
-// Clear input fields after adding a song
+// --------------------
+// ADD SONG
+// --------------------
+function addSong() {
+    const title = document.getElementById('songTitle')?.value;
+    const artist = document.getElementById('songArtist')?.value;
+    const albumCover = document.getElementById('albumCover')?.files[0];
+
+    if (!title || !artist) {
+        alert("Por favor, complete todos los campos.");
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = event => {
+        const song = {
+            title,
+            artist,
+            albumCover: event.target.result,
+            id: Date.now(),
+            theme: "",
+            emotion: "",
+            lyrics: "",
+            structure: "",
+            interpretation: ""
+        };
+
+        songs.push(song);
+        localStorage.setItem("songs", JSON.stringify(songs));
+        displaySongs();
+        clearInputs();
+    };
+
+    if (albumCover) reader.readAsDataURL(albumCover);
+}
+
+// --------------------
+// CLEAR INPUTS
+// --------------------
 function clearInputs() {
-    document.getElementById('songTitle').value = '';
-    document.getElementById('songArtist').value = '';
-    document.getElementById('albumCover').value = '';
+    const titleField = document.getElementById('songTitle');
+    const artistField = document.getElementById('songArtist');
+    const fileField = document.getElementById('albumCover');
+
+    if (titleField) titleField.value = "";
+    if (artistField) artistField.value = "";
+    if (fileField) fileField.value = "";
 }
 
-// Display songs from localStorage
+// --------------------
+// DISPLAY SONG CARDS
+// --------------------
 function displaySongs() {
-    const container = document.getElementById('songsContainer');
-    container.innerHTML = '';  // Clear current list
+    const container = document.getElementById("songsContainer");
+    if (!container) return;
+
+    container.innerHTML = "";
+
     songs.forEach((song, index) => {
-        const songDiv = document.createElement('div');
-        songDiv.classList.add('song-card');
-        songDiv.onclick = () => showSongDetails(index);
-        songDiv.innerHTML = `
+        const card = document.createElement("div");
+        card.classList.add("song-card");
+
+        card.onclick = () => showSongDetails(index);
+
+        card.innerHTML = `
             <img src="${song.albumCover}" alt="${song.title}">
             <p><strong>${song.title}</strong></p>
             <p>${song.artist}</p>
-            <button class="edit-btn" onclick="editSong(${index}, event)">Editar</button>
-            <button class="delete-btn" onclick="deleteSong(${index}, event)">Eliminar</button>
+
+            <button class="edit-btn" data-index="${index}">Editar</button>
+            <button class="delete-btn" data-index="${index}">Eliminar</button>
         `;
-        container.appendChild(songDiv);
+
+        container.appendChild(card);
+    });
+
+    // Attach Edit & Delete button events safely
+    container.querySelectorAll(".edit-btn").forEach(btn => {
+        btn.onclick = e => {
+            e.stopPropagation();
+            editSong(parseInt(btn.dataset.index));
+        };
+    });
+
+    container.querySelectorAll(".delete-btn").forEach(btn => {
+        btn.onclick = e => {
+            e.stopPropagation();
+            deleteSong(parseInt(btn.dataset.index));
+        };
     });
 }
 
-// Show details of the song when clicked
+// --------------------
+// SHOW SONG DETAILS
+// --------------------
 function showSongDetails(index) {
     currentSongIndex = index;
     const song = songs[index];
-    document.getElementById('songDetailsModal').style.display = "flex";
-    document.getElementById('songDetails').innerHTML = `
+
+    document.getElementById("songDetailsModal").style.display = "flex";
+
+    document.getElementById("songDetails").innerHTML = `
         <p><strong>Título:</strong> ${song.title}</p>
         <p><strong>Artista:</strong> ${song.artist}</p>
         <p><strong>Portada del Álbum:</strong></p>
         <img src="${song.albumCover}" width="100">
     `;
-    // Prefill the form with the song details
-    document.getElementById('theme').value = song.theme;
-    document.getElementById('emotion').value = song.emotion;
-    document.getElementById('lyrics').value = song.lyrics;
-    document.getElementById('structure').value = song.structure;
-    document.getElementById('interpretation').value = song.interpretation;
+
+    document.getElementById("theme").value = song.theme;
+    document.getElementById("emotion").value = song.emotion;
+    document.getElementById("lyrics").value = song.lyrics;
+    document.getElementById("structure").value = song.structure;
+    document.getElementById("interpretation").value = song.interpretation;
 }
 
-// Save answers from the detail form
+// --------------------
+// SAVE SONG DETAILS
+// --------------------
 function saveSongDetails() {
-    const theme = document.getElementById('theme').value;
-    const emotion = document.getElementById('emotion').value;
-    const lyrics = document.getElementById('lyrics').value;
-    const structure = document.getElementById('structure').value;
-    const interpretation = document.getElementById('interpretation').value;
-
-    // Update the song details in the local songs array
     const song = songs[currentSongIndex];
-    song.theme = theme;
-    song.emotion = emotion;
-    song.lyrics = lyrics;
-    song.structure = structure;
-    song.interpretation = interpretation;
 
-    // Save updated songs array to localStorage
+    song.theme = document.getElementById("theme").value;
+    song.emotion = document.getElementById("emotion").value;
+    song.lyrics = document.getElementById("lyrics").value;
+    song.structure = document.getElementById("structure").value;
+    song.interpretation = document.getElementById("interpretation").value;
+
     localStorage.setItem("songs", JSON.stringify(songs));
-
-    // Re-render the songs list
     displaySongs();
-
-    // Close the modal
     closeModal();
 }
 
-// Edit a song (triggered when "Editar" button is clicked)
-function editSong(index, event) {
-    event.stopPropagation(); // Prevent the card click event from firing
-    currentSongIndex = index;
-
-    const song = songs[index];
-
-    // Open the modal and prefill the data
-    document.getElementById('songDetailsModal').style.display = "flex";
-    document.getElementById('songDetails').innerHTML = `
-        <p><strong>Título:</strong> ${song.title}</p>
-        <p><strong>Artista:</strong> ${song.artist}</p>
-        <p><strong>Portada del Álbum:</strong></p>
-        <img src="${song.albumCover}" width="100">
-    `;
-    document.getElementById('theme').value = song.theme;
-    document.getElementById('emotion').value = song.emotion;
-    document.getElementById('lyrics').value = song.lyrics;
-    document.getElementById('structure').value = song.structure;
-    document.getElementById('interpretation').value = song.interpretation;
+// --------------------
+// EDIT SONG
+// --------------------
+function editSong(index) {
+    showSongDetails(index);
 }
 
-// Delete a song (triggered when "Eliminar" button is clicked)
-function deleteSong(index, event) {
-    event.stopPropagation(); // Prevent the card click event from firing
-    if (confirm("¿Estás seguro de que quieres eliminar esta canción?")) {
-        // Remove the song from the array
-        songs.splice(index, 1);
+// --------------------
+// DELETE SONG
+// --------------------
+function deleteSong(index) {
+    if (!confirm("¿Estás seguro de que quieres eliminar esta canción?")) return;
 
-        // Save updated songs array to localStorage
-        localStorage.setItem("songs", JSON.stringify(songs));
-
-        // Re-render the songs list
-        displaySongs();
-    }
+    songs.splice(index, 1);
+    localStorage.setItem("songs", JSON.stringify(songs));
+    displaySongs();
 }
 
-// Close the modal when the user clicks the "×"
+// --------------------
+// CLOSE MODAL
+// --------------------
 function closeModal() {
-    document.getElementById('songDetailsModal').style.display = "none";
+    document.getElementById("songDetailsModal").style.display = "none";
 }
 
-// Filter songs based on search input
+// --------------------
+// FILTER SONGS
+// --------------------
 function filterSongs() {
-    const filterText = document.getElementById('songFilter').value.toLowerCase();
-    const filteredSongs = songs.filter(song => {
-        return song.title.toLowerCase().includes(filterText) || song.artist.toLowerCase().includes(filterText);
-    });
-    displayFilteredSongs(filteredSongs);
+    const text = document.getElementById("songFilter")?.value.toLowerCase();
+    if (!text) return displaySongs();
+
+    const filtered = songs.filter(s =>
+        s.title.toLowerCase().includes(text) ||
+        s.artist.toLowerCase().includes(text)
+    );
+
+    displayFilteredSongs(filtered);
 }
 
-// Display filtered songs
-function displayFilteredSongs(filteredSongs) {
-    const container = document.getElementById('songsContainer');
-    container.innerHTML = '';  // Clear current list
-    filteredSongs.forEach((song, index) => {
-        const songDiv = document.createElement('div');
-        songDiv.classList.add('song-card');
-        songDiv.onclick = () => showSongDetails(index);
-        songDiv.innerHTML = `
+function displayFilteredSongs(list) {
+    const container = document.getElementById("songsContainer");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    list.forEach((song, index) => {
+        const card = document.createElement("div");
+        card.classList.add("song-card");
+        card.onclick = () => showSongDetails(index);
+
+        card.innerHTML = `
             <img src="${song.albumCover}" alt="${song.title}">
             <p><strong>${song.title}</strong></p>
             <p>${song.artist}</p>
-            <button class="edit-btn" onclick="editSong(${index}, event)">Editar</button>
-            <button class="delete-btn" onclick="deleteSong(${index}, event)">Eliminar</button>
         `;
-        container.appendChild(songDiv);
+
+        container.appendChild(card);
     });
 }
 
-// Initial display of songs when the page loads
-document.addEventListener('DOMContentLoaded', function() {
-    displaySongs();
-});
+// Make available globally
+window.setupMusic = setupMusic;
+window.addSong = addSong;
+window.saveSongDetails = saveSongDetails;
+window.filterSongs = filterSongs;
+window.closeModal = closeModal;
