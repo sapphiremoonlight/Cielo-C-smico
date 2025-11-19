@@ -356,14 +356,88 @@ filter: drop-shadow(0 0 4px rgba(0,255,165,0.6));
     transform: scale(1.15);
 }
 
-/* ========================
-        T E S T S
-========================== */
-
 h1 {
     font-size: 1.8rem;
     margin-bottom: 20px;
     color: var(--accent);
+}
+
+/* -----------------------
+   Conjugation Tab Styles
+------------------------ */
+#conjugation-tab {
+    display: none;
+}
+
+#conjugation-tab .search-container {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+#conjugation-tab input[type="text"] {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--accent);
+    border-radius: 5px;
+    background: var(--bg);
+    color: var(--text);
+}
+
+#conjugation-tab button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    background: var(--button);
+    color: var(--button-text);
+    cursor: pointer;
+}
+
+#conjugation-tab button:hover {
+    opacity: 0.85;
+}
+
+#verbResult {
+    margin-top: 1rem;
+    background: var(--card-bg);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+#verbResult table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+}
+
+#verbResult th, #verbResult td {
+    border: 1px solid var(--accent);
+    padding: 0.4rem 0.6rem;
+    text-align: center;
+}
+
+#verbResult th {
+    background-color: var(--accent);
+    color: var(--bg);
+}
+
+#verbResult .placeholder {
+    color: var(--text-light);
+    font-style: italic;
+}
+
+#youtubeVideos {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+#youtubeVideos iframe {
+    width: 250px;
+    height: 140px;
+    border: none;
+    border-radius: 6px;
 }
 
 /* ========================
