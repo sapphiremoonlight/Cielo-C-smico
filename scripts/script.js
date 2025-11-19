@@ -27,6 +27,7 @@ navBtns.forEach(btn => {
                 if (tabName === "conjugation") setupConjugation();
                 if (tabName === "tests") setupTests();
                 if (tabName === "flashcards") setupFlashcards();
+                if (tabName === "music") setupMusic();
                 if (tabName === "gamification") setupGamification();
             })
             .catch(err => {
@@ -59,6 +60,7 @@ if (activeBtn) {
             if (tabName === "conjugation") setupConjugation(); 
             if (tabName === "tests") setupTests();        
             if (tabName === "flashcards") setupFlashcards();
+            if (tabName === "music") setupMusic();
             if (tabName === "gamification") setupGamification();
         })
         .catch(err => {
