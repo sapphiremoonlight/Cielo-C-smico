@@ -865,6 +865,22 @@ color: var(--text);
     margin-bottom: 10px;
 }
 
+/* ---------------------------------------
+   White / Light Placeholder Text
+--------------------------------------- */
+
+.inputField::placeholder {
+    color: var(--text-light);
+    opacity: 0.9;
+}
+
+.inputField:-ms-input-placeholder { /* IE 10+ */
+    color: var(--text-light);
+}
+
+.inputField::-ms-input-placeholder { /* Edge */
+    color: var(--text-light);
+}
 
 /* Weekly Progress Styling */
 .theme-mint .dashboard-wrapper {
