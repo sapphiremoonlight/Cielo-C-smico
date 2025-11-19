@@ -1,30 +1,31 @@
 /* ---------------------------------------
    THEME VARIABLES
----------------------------------------*/
+--------------------------------------*/
 
 /* Default: Emerald Cosmos */
 :root {
     --bg: #0a1f17;
-    --sidebar: #0f3d2e;
+    --sidebar: #0e694b;
     --text: #e7fbee;
     --text-light: #c8f2d9;
     --accent: #9ef0c0;
-    --button: #1f6d55;
+    --button: #3d7e6a;
     --button-text: #eafff4;
-    --card-bg: rgba(30, 70, 50, 0.85);
+    --card-bg: rgba(57, 137, 97, 0.85);
 }
 
-/* Mint Galaxy */
-.theme-mint {
-    --bg: #bfffe0;
-    --sidebar: #a6f2cf;
-    --text: #07492f;
-    --text-light: #0f6a47;
-    --accent: #6effc3;
-    --button: #0f6a47;
-    --button-text: #eafff4;
-    --card-bg: rgba(0, 100, 60, 0.85);
+/* Pastel Grove */
+.theme-pastel-grove {
+    --bg: #e3fdf5;            /* soft minty background */
+    --sidebar: #c1f4e0;       /* gentle sidebar */
+    --text: #2d6a4f;          /* readable green text */
+    --text-light: #4da77d;    /* lighter accent text */
+    --accent: #7ddcb3;        /* soft highlight color */
+    --button: #53c29e;        /* pastel button */
+    --button-text: #ffffff;   /* clean white text */
+    --card-bg: rgba(169, 242, 200, 0.85); /* pastel card background */
 }
+
 
 /* Moonlit Jade */
 .theme-jade {
