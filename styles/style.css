@@ -30,17 +30,18 @@ body {
     --card-bg: rgba(57, 137, 97, 0.85);
 }
 
-/* Mint Galaxy */
-.theme-mint {
-    --bg: #bfffe0;
-    --sidebar: #a6f2cf;
-    --text: #42a37c;
-    --text-light: #54e0a8;
-    --accent: #26d28b;
-    --button: #06cc80;
-    --button-text: #eafff4;
-    --card-bg: rgba(34, 200, 133, 0.85);
+/* Pastel Grove */
+.theme-pastel-grove {
+    --bg: #e3fdf5;            /* soft minty background */
+    --sidebar: #c1f4e0;       /* gentle sidebar */
+    --text: #2d6a4f;          /* readable green text */
+    --text-light: #4da77d;    /* lighter accent text */
+    --accent: #7ddcb3;        /* soft highlight color */
+    --button: #53c29e;        /* pastel button */
+    --button-text: #ffffff;   /* clean white text */
+    --card-bg: rgba(169, 242, 200, 0.85); /* pastel card background */
 }
+
 
 /* Moonlit Jade */
 .theme-jade {
