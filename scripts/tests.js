@@ -51,13 +51,15 @@ function setupTests() {
                     </div>`).join('');
             } else if (type === 'match') {
                 html += `<table>
-                            <tr><th>Left</th><th>Right</th></tr>`;
-                html += Array.from({ length: 4 }).map((_, idx) =>
+                            <tr><th>Left</th><th>Right</th></tr>` +
+                        Array.from({ length: 4 }).map((_, idx) =>
                     `<tr>
                         <td><input placeholder="Left ${idx + 1}" class="left-${idx}" /></td>
                         <td><input placeholder="Right ${idx + 1}" class="right-${idx}" /></td>
-                    </tr>`).join('');
-                html += `</table>`;
+                    </tr>`).join('') +
+                    `</table>`;
+            } else if (type === 'written') {
+                html += `<textarea placeholder="Your answer here..." class="written-answer" rows="3" style="width:100%;"></textarea>`;
             }
 
             qDiv.innerHTML = html;
@@ -81,15 +83,17 @@ function setupTests() {
         const questions = currentFormQuestions.map((qDiv, idx) => {
             if (type === 'multiple-choice') {
                 const questionText = qDiv.querySelector('.question-text').value;
-                const options = ['A', 'B', 'C', 'D'].map(opt =>
-                    qDiv.querySelector(`.option-${opt}`).value
-                );
+                const options = ['A', 'B', 'C', 'D'].map(opt => qDiv.querySelector(`.option-${opt}`).value);
                 const correct = qDiv.querySelector(`input[name="correct-${idx}"]:checked`);
                 return { question: questionText, options, correct: correct ? parseInt(correct.value) : 0 };
             } else if (type === 'match') {
                 const left = Array.from({ length: 4 }).map((_, i) => qDiv.querySelector(`.left-${i}`).value);
                 const right = Array.from({ length: 4 }).map((_, i) => qDiv.querySelector(`.right-${i}`).value);
                 return { matchLeft: left, matchRight: right };
+            } else if (type === 'written') {
+                const questionText = qDiv.querySelector('.question-text').value;
+                const answer = qDiv.querySelector('.written-answer').value || '';
+                return { question: questionText, answer };
             }
         });
 
@@ -110,6 +114,9 @@ function setupTests() {
         let currentQ = 0;
 
         function renderQuestion(qIdx) {
+            const existingNav = container.querySelector('#navButtons');
+            if (existingNav) existingNav.remove();  // Remove previous nav to prevent duplicates
+
             container.querySelectorAll('.user-question').forEach(e => e.remove());
             const q = test.questions[qIdx];
             const qDiv = document.createElement('div');
@@ -118,18 +125,23 @@ function setupTests() {
 
             if (test.type === 'multiple-choice') {
                 html += `<p>${q.question}</p>` +
-                    q.options.map((opt, idx) => `<label><input type="radio" name="ans-${qIdx}" value="${idx}" ${q.answer == idx ? 'checked' : ''} /> ${opt}</label>`).join('<br>');
+                    q.options.map((opt, idx) =>
+                        `<label><input type="radio" name="ans-${qIdx}" value="${idx}" ${q.answer == idx ? 'checked' : ''} /> ${opt}</label><br>`).join('');
             } else if (test.type === 'match') {
                 html += '<table>' + Array.from({ length: 4 }).map((_, i) =>
                     `<tr><td>${q.matchLeft[i]}</td><td>
                         <input type="text" value="${q.answer && q.answer[i] ? q.answer[i] : ''}" class="match-input-${i}" />
                     </td></tr>`).join('') + '</table>';
+            } else if (test.type === 'written') {
+                html += `<p>${q.question}</p>
+                         <textarea class="written-answer" style="width:100%" rows="3">${q.answer || ''}</textarea>`;
             }
 
             qDiv.innerHTML = html;
             container.appendChild(qDiv);
 
             const navDiv = document.createElement('div');
+            navDiv.id = 'navButtons';
             navDiv.style.marginTop = '1rem';
             navDiv.innerHTML = `<button id="prevQ">Back</button> <button id="nextQ">${qIdx === test.questions.length - 1 ? 'Finish' : 'Next'}</button>`;
             container.appendChild(navDiv);
@@ -151,10 +163,11 @@ function setupTests() {
                 const ans = container.querySelector(`input[name="ans-${qIdx}"]:checked`);
                 if (ans) q.answer = parseInt(ans.value);
             } else if (test.type === 'match') {
-                q.answer = Array.from({ length: 4 }).map((i, idx) => {
-                    const val = container.querySelector(`.match-input-${idx}`).value;
-                    return val;
-                });
+                q.answer = Array.from({ length: 4 }).map((_, idx) =>
+                    container.querySelector(`.match-input-${idx}`).value
+                );
+            } else if (test.type === 'written') {
+                q.answer = container.querySelector('.written-answer').value;
             }
         }
 
@@ -176,16 +189,14 @@ function setupTests() {
         saveTests();
     };
 
-    // -------------------- GREEN PASTEL PDF --------------------
+    // -------------------- PRINT TEST --------------------
     window.printTest = async (index, includeAnswers = false) => {
         const { jsPDF } = window.jspdf;
         const test = tests[index];
         const doc = new jsPDF();
 
-        // Load PNG logo
         const logo = await toBase64("logo.png");
 
-        // Header
         doc.setFillColor(150, 200, 150);
         doc.rect(0, 0, 210, 30, "F");
 
@@ -199,7 +210,6 @@ function setupTests() {
         doc.text(test.subtitle, 105, 26, { align: "center" });
 
         doc.setTextColor(0, 70, 0);
-
         let y = 40;
 
         test.questions.forEach((q, i) => {
@@ -212,25 +222,25 @@ function setupTests() {
             doc.text(`${i + 1}. ${q.question}`, 12, y + 4);
             y += 12;
 
-            q.options.forEach((opt, idx) => {
-                let isCorrect = includeAnswers && idx === q.correct;
-
-                if (isCorrect) {
-                    doc.setFillColor(210, 245, 210);
-                    doc.rect(10, y - 5, 190, 8, "F");
+            if (test.type === 'multiple-choice') {
+                q.options.forEach((opt, idx) => {
+                    let isCorrect = includeAnswers && idx === q.correct;
+                    if (isCorrect) { doc.setFillColor(210, 245, 210); doc.rect(10, y - 5, 190, 8, "F"); }
+                    doc.setTextColor(0, 90, 0);
+                    doc.text(`${["A","B","C","D"][idx]}. ${opt}`, 14, y);
+                    if (isCorrect) { doc.setTextColor(0, 140, 0); doc.text("✔", 200, y); }
+                    doc.setTextColor(0, 70, 0);
+                    y += 8;
+                });
+            } else if (test.type === 'match') {
+                for (let j = 0; j < q.matchLeft.length; j++) {
+                    doc.text(`${q.matchLeft[j]} → ${includeAnswers ? q.matchRight[j] : '_____'}`, 12, y);
+                    y += 8;
                 }
-
-                doc.setTextColor(0, 90, 0);
-                doc.text(`${["A", "B", "C", "D"][idx]}. ${opt}`, 14, y);
-
-                if (isCorrect) {
-                    doc.setTextColor(0, 140, 0);
-                    doc.text("✔", 200, y);
-                }
-
-                doc.setTextColor(0, 70, 0);
-                y += 8;
-            });
+            } else if (test.type === 'written') {
+                doc.text(includeAnswers && q.answer ? `Answer: ${q.answer}` : 'Answer: ______', 12, y);
+                y += 10;
+            }
 
             y += 6;
         });
@@ -238,7 +248,6 @@ function setupTests() {
         doc.save(`${test.title}.pdf`);
     };
 
-    // Convert image to base64
     function toBase64(url) {
         return fetch(url)
             .then(res => res.blob())
@@ -249,9 +258,7 @@ function setupTests() {
             }));
     }
 
-    // Now safe to run
     renderTests();
 }
 
-// Make setupTests globally available
 window.setupTests = setupTests;
