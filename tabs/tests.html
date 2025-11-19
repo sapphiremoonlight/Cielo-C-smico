@@ -5,29 +5,34 @@
         <h2>Test Maker ✨</h2>
         <p>Create, edit, take, and print your Spanish tests.</p>
 
-    <!-- Test Form -->
-    <div class="test-form">
-        <input type="text" id="testTitle" placeholder="Test Title" />
-        <input type="text" id="testSubtitle" placeholder="Subtitle" />
-        <input type="number" id="testUnit" placeholder="Unit (1-6)" min="1" max="6" />
+        <!-- Test Form -->
+        <div class="test-form">
 
-        <select id="testType">
-            <option value="written">Written Test</option>
-            <option value="match">Match Column Table</option>
-            <option value="mcq">Multiple Choice</option>
-        </select>
+            <input type="text" id="testTitle" placeholder="Test Title" />
+            <input type="text" id="testSubtitle" placeholder="Subtitle" />
+            <input type="number" id="testUnit" placeholder="Unit (1-6)" min="1" max="6" />
 
-        <input type="number" id="testQuestions" placeholder="Number of Questions (5-30)" min="5" max="30" />
-        <button id="createTest">Create Test</button>
+            <!-- FIXED select -->
+            <select id="testType">
+                <option value="multiple-choice">Multiple Choice</option>
+                <option value="match">Match Column Table</option>
+            </select>
+
+            <input type="number" id="testQuestions" placeholder="Number of Questions (5-30)" min="5" max="30" />
+
+            <!-- REQUIRED for JS question builder -->
+            <div id="questionForm"></div>
+
+            <button id="createTest">Create Test</button>
+        </div>
+
+        <!-- Test List -->
+        <div class="tests-list">
+            <h3>Saved Tests</h3>
+            <div id="savedTests"></div>
+        </div>
+
+        <!-- Question Editor / Take Test -->
+        <div id="questionEditor" style="display:none;"></div>
     </div>
-
-    <!-- Test List -->
-    <div class="tests-list">
-        <h3>Saved Tests</h3>
-        <div id="savedTests"></div>
-    </div>
-
-    <!-- Question Editor / Take Test -->
-    <div id="questionEditor" style="display:none;"></div>
-</div>
 </div>
