@@ -301,9 +301,6 @@ h1 {
 /* -----------------------
    Conjugation Tab Styles
 ------------------------ */
-#conjugation-tab {
-    display: none;
-}
 
 #conjugation-tab .search-container {
     display: flex;
