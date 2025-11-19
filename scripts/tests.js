@@ -176,71 +176,82 @@ function setupTests() {
         saveTests();
     };
 
-    // -------------------- PDF --------------------
-window.printTest = async (index, includeAnswers = false) => {
-    const { jsPDF } = window.jspdf;
-    const test = tests[index];
-    const doc = new jsPDF();
+    // -------------------- GREEN PASTEL PDF --------------------
+    window.printTest = async (index, includeAnswers = false) => {
+        const { jsPDF } = window.jspdf;
+        const test = tests[index];
+        const doc = new jsPDF();
 
-    // ----------------------------------------------------
-    // 1. Load PNG Logo (convert to base64 automatically)
-    // ----------------------------------------------------
-    const logoBase64 = await toBase64('logo.png');
-    doc.addImage(logoBase64, 'PNG', 80, 5, 50, 20);   
-    // x=80 centers a 50px wide image on 210mm page width
+        // Load PNG logo
+        const logo = await toBase64("logo.png");
 
-    // ----------------------------------------------------
-    // 2. Title & subtitles under the logo
-    // ----------------------------------------------------
-    doc.setFontSize(20);
-    doc.text(test.title, 105, 32, null, null, 'center');
+        // Header
+        doc.setFillColor(150, 200, 150);
+        doc.rect(0, 0, 210, 30, "F");
 
-    doc.setFontSize(12);
-    doc.text(test.subtitle, 105, 40, null, null, 'center');
+        doc.addImage(logo, "PNG", 10, 4, 22, 22);
 
-    let y = 50;
+        doc.setFontSize(20);
+        doc.setTextColor(255, 255, 255);
+        doc.text(test.title, 105, 18, { align: "center" });
 
-    test.questions.forEach((q, i) => {
-        if (y > 270) { doc.addPage(); y = 20; }
+        doc.setFontSize(12);
+        doc.text(test.subtitle, 105, 26, { align: "center" });
 
-        if (test.type === 'multiple-choice') {
-            doc.text(`${i + 1}. ${q.question}`, 10, y); 
-            y += 7;
+        doc.setTextColor(0, 70, 0);
+
+        let y = 40;
+
+        test.questions.forEach((q, i) => {
+            if (y > 260) { doc.addPage(); y = 20; }
+
+            doc.setFillColor(230, 255, 230);
+            doc.roundedRect(8, y - 4, 194, 12, 3, 3, "F");
+
+            doc.setFontSize(13);
+            doc.text(`${i + 1}. ${q.question}`, 12, y + 4);
+            y += 12;
 
             q.options.forEach((opt, idx) => {
-                let txt = `   ${['A','B','C','D'][idx]}. ${opt}`;
-                if (includeAnswers && idx === q.correct) txt += ' ✅';
-                doc.text(txt, 12, y); 
-                y += 7;
+                let isCorrect = includeAnswers && idx === q.correct;
+
+                if (isCorrect) {
+                    doc.setFillColor(210, 245, 210);
+                    doc.rect(10, y - 5, 190, 8, "F");
+                }
+
+                doc.setTextColor(0, 90, 0);
+                doc.text(`${["A", "B", "C", "D"][idx]}. ${opt}`, 14, y);
+
+                if (isCorrect) {
+                    doc.setTextColor(0, 140, 0);
+                    doc.text("✔", 200, y);
+                }
+
+                doc.setTextColor(0, 70, 0);
+                y += 8;
             });
 
-        } else if (test.type === 'match') {
-            doc.text(`${i + 1}. Match the columns:`, 10, y); 
-            y += 7;
+            y += 6;
+        });
 
-            q.matchLeft.forEach((left, idx) => {
-                let txt = `   ${left} - ${includeAnswers ? q.matchRight[idx] : '________'}`;
-                doc.text(txt, 12, y); 
-                y += 7;
-            });
-        }
+        doc.save(`${test.title}.pdf`);
+    };
 
-        y += 4;
-    });
+    // Convert image to base64
+    function toBase64(url) {
+        return fetch(url)
+            .then(res => res.blob())
+            .then(blob => new Promise(resolve => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.readAsDataURL(blob);
+            }));
+    }
 
-    doc.save(`${test.title}.pdf`);
-};
-
-// Utility: URL → base64 conversion
-function toBase64(url) {
-    return fetch(url)
-        .then(res => res.blob())
-        .then(blob => new Promise(resolve => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result);
-            reader.readAsDataURL(blob);
-        }));
+    // Now safe to run
+    renderTests();
 }
 
-renderTests();
+// Make setupTests globally available
 window.setupTests = setupTests;
