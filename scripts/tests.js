@@ -177,41 +177,70 @@ function setupTests() {
     };
 
     // -------------------- PDF --------------------
-    window.printTest = (index, includeAnswers = false) => {
-        const { jsPDF } = window.jspdf;
-        const test = tests[index];
-        const doc = new jsPDF();
-        doc.setFontSize(20);
-        doc.text('Cielo Cósmico ✨', 105, 15, null, null, 'center');
-        doc.setFontSize(16);
-        doc.text(test.title, 105, 25, null, null, 'center');
-        doc.setFontSize(12);
-        doc.text(test.subtitle, 105, 32, null, null, 'center');
+window.printTest = async (index, includeAnswers = false) => {
+    const { jsPDF } = window.jspdf;
+    const test = tests[index];
+    const doc = new jsPDF();
 
-        let y = 45;
-        test.questions.forEach((q, i) => {
-            if (y > 270) { doc.addPage(); y = 20; }
-            if (test.type === 'multiple-choice') {
-                doc.text(`${i + 1}. ${q.question}`, 10, y); y += 7;
-                q.options.forEach((opt, idx) => {
-                    let txt = `   ${['A','B','C','D'][idx]}. ${opt}`;
-                    if (includeAnswers && idx === q.correct) txt += ' ✅';
-                    doc.text(txt, 12, y); y += 7;
-                });
-            } else if (test.type === 'match') {
-                doc.text(`${i + 1}. Match the columns:`, 10, y); y += 7;
-                q.matchLeft.forEach((left, idx) => {
-                    let txt = `   ${left} - ${includeAnswers ? q.matchRight[idx] : '________'}`;
-                    doc.text(txt, 12, y); y += 7;
-                });
-            }
-            y += 4;
-        });
-        doc.save(`${test.title}.pdf`);
-    };
+    // ----------------------------------------------------
+    // 1. Load PNG Logo (convert to base64 automatically)
+    // ----------------------------------------------------
+    const logoBase64 = await toBase64('logo.png');
+    doc.addImage(logoBase64, 'PNG', 80, 5, 50, 20);   
+    // x=80 centers a 50px wide image on 210mm page width
 
-    renderTests();
+    // ----------------------------------------------------
+    // 2. Title & subtitles under the logo
+    // ----------------------------------------------------
+    doc.setFontSize(20);
+    doc.text(test.title, 105, 32, null, null, 'center');
+
+    doc.setFontSize(12);
+    doc.text(test.subtitle, 105, 40, null, null, 'center');
+
+    let y = 50;
+
+    test.questions.forEach((q, i) => {
+        if (y > 270) { doc.addPage(); y = 20; }
+
+        if (test.type === 'multiple-choice') {
+            doc.text(`${i + 1}. ${q.question}`, 10, y); 
+            y += 7;
+
+            q.options.forEach((opt, idx) => {
+                let txt = `   ${['A','B','C','D'][idx]}. ${opt}`;
+                if (includeAnswers && idx === q.correct) txt += ' ✅';
+                doc.text(txt, 12, y); 
+                y += 7;
+            });
+
+        } else if (test.type === 'match') {
+            doc.text(`${i + 1}. Match the columns:`, 10, y); 
+            y += 7;
+
+            q.matchLeft.forEach((left, idx) => {
+                let txt = `   ${left} - ${includeAnswers ? q.matchRight[idx] : '________'}`;
+                doc.text(txt, 12, y); 
+                y += 7;
+            });
+        }
+
+        y += 4;
+    });
+
+    doc.save(`${test.title}.pdf`);
+};
+
+// Utility: URL → base64 conversion
+function toBase64(url) {
+    return fetch(url)
+        .then(res => res.blob())
+        .then(blob => new Promise(resolve => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.readAsDataURL(blob);
+        }));
 }
 
-// Make setupTests globally available
+renderTests();
 window.setupTests = setupTests;
