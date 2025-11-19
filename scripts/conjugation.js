@@ -37,12 +37,14 @@ function setupConjugation() {
         }
         resultDiv.innerHTML = html;
 
-        // Optional: YouTube search embed
+        // Show fixed embedded videos
         youtubeDiv.innerHTML = `
-            <iframe width="300" height="169" src="https://www.youtube.com/embed?listType=search&list=${verb.infinitive}+spanish+conjugation" frameborder="0" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/R4SiKCStHuU" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/lfFsbeKyBKY" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/Bzh9sBe2gGk" allowfullscreen></iframe>
         `;
     });
 }
 
-// Expose globally for tab loader
+// Expose globally
 window.setupConjugation = setupConjugation;
