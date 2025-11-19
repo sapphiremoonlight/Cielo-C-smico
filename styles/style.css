@@ -787,16 +787,18 @@ background: var(--bg);
 color: var(--text);
 }
 
-/* ------------------------------
-            MUSIC CSS
---------------------------------*/
+/* ---------------------------------------
+   MUSIC TAB CSS (Theme-aware)
+--------------------------------------- */
+
 .inputField {
     padding: 12px;
     margin: 8px 0;
     width: 100%;
-    border: 2px solid #ddd;
+    border: 2px solid var(--accent);
     border-radius: 8px;
-    background-color: #fff;
+    background-color: var(--card-bg);
+    color: var(--text);
     font-size: 16px;
     box-sizing: border-box;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -822,12 +824,13 @@ color: var(--text);
 }
 
 .btn:hover {
-    background-color: #40b97f;
+    background-color: var(--accent);
     transform: translateY(-2px);
 }
 
 .delete-btn {
-    background-color: #c32a2a;
+    background-color: #c32a2a; /* keep delete red */
+    color: #fff;
 }
 
 .delete-btn:hover {
@@ -836,10 +839,11 @@ color: var(--text);
 
 .form-section {
     padding: 25px;
-    background-color: #f5f5f5;
+    background-color: var(--card-bg);
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     margin: 20px 0;
+    color: var(--text);
 }
 
 #songListSection {
@@ -860,11 +864,12 @@ color: var(--text);
     text-align: center;
     cursor: pointer;
     padding: 10px;
-    background-color: #fff;
+    background-color: var(--card-bg);
     border-radius: 12px;
     box-shadow: 0 6px 12px rgba(0,0,0,0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
+    color: var(--text);
 }
 
 .song-card img {
@@ -914,6 +919,17 @@ color: var(--text);
     font-size: 30px;
     cursor: pointer;
 }
+
+/* Optional: Button spacing inside modal */
+.modal-content .btn {
+    margin-top: 12px;
+}
+
+/* Input spacing inside modal */
+.modal-content .inputField {
+    margin-bottom: 10px;
+}
+
 
 /* Weekly Progress Styling */
 .theme-mint .dashboard-wrapper {
