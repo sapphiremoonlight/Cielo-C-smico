@@ -21,9 +21,9 @@ function renderTests() {
         div.innerHTML = `
             <span>${test.title} (Unit ${test.unit})</span>
             <div>
-                <button onclick="editTest(${index})">Edit</button>
-                <button onclick="takeTest(${index})">Take</button>
-                <button onclick="deleteTest(${index})">Delete</button>
+                <button type='button' onclick='editTest(${index})'>Edit</button>
+                <button type='button' onclick='takeTest(${index})'>Take</button>
+                <button type='button' onclick='deleteTest(${index})'>Delete</button>
             </div>`;
         savedTestsDiv.appendChild(div);
     });
@@ -79,4 +79,8 @@ window.takeTest = (index) => {
 };
 
 renderTests();
+
 }
+
+// Call setupTests globally in case the tab is already loaded
+window.setupTests = setupTests;
