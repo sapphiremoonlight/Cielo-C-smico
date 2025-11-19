@@ -1,130 +1,82 @@
-/* ----------------------------------------------------
-   Load Tests from LocalStorage
----------------------------------------------------- */
-let tests = JSON.parse(localStorage.getItem("tests")) || [];
+// ===================== TEST TAB JS =====================
 
-// Save tests back to localStorage
+function setupTests() {
+const createBtn = document.getElementById('createTest');
+const savedTestsDiv = document.getElementById('savedTests');
+const questionEditor = document.getElementById('questionEditor');
+
+
+let tests = JSON.parse(localStorage.getItem('tests')) || [];
+
 function saveTests() {
-    localStorage.setItem("tests", JSON.stringify(tests));
+    localStorage.setItem('tests', JSON.stringify(tests));
+    renderTests();
 }
 
-/* ----------------------------------------------------
-   Render All Tests
----------------------------------------------------- */
 function renderTests() {
-    const container = document.getElementById("test-list-container");
-    container.innerHTML = "";
-
+    savedTestsDiv.innerHTML = '';
     tests.forEach((test, index) => {
-        const item = document.createElement("div");
-        item.classList.add("test-item", "fade-in");
-
-        item.innerHTML = `
-            <h3>${test.title}</h3>
-            <p>${test.subtitle || ""}</p>
-            <p><strong>Type:</strong> ${test.type}</p>
-            <p><strong>Questions:</strong> ${test.questionCount}</p>
-            <p><strong>Timer:</strong> ${test.timer} min</p>
-
-            <button class="edit-btn" data-index="${index}">✏️ Edit</button>
-            <button class="delete-btn" data-index="${index}">🗑 Delete</button>
-        `;
-
-        container.appendChild(item);
+        const div = document.createElement('div');
+        div.classList.add('test-item');
+        div.innerHTML = `
+            <span>${test.title} (Unit ${test.unit})</span>
+            <div>
+                <button onclick="editTest(${index})">Edit</button>
+                <button onclick="takeTest(${index})">Take</button>
+                <button onclick="deleteTest(${index})">Delete</button>
+            </div>`;
+        savedTestsDiv.appendChild(div);
     });
 }
 
-/* ----------------------------------------------------
-   Create New Test
----------------------------------------------------- */
-document.getElementById("create-test-btn").addEventListener("click", () => {
-    const title = document.getElementById("test-title").value.trim();
-    if (!title) {
-        alert("Please enter a test title.");
-        return;
-    }
+createBtn.onclick = () => {
+    const title = document.getElementById('testTitle').value;
+    const subtitle = document.getElementById('testSubtitle').value;
+    const unit = parseInt(document.getElementById('testUnit').value);
+    const type = document.getElementById('testType').value;
+    const questionsCount = parseInt(document.getElementById('testQuestions').value);
 
-    const newTest = {
-        title,
-        subtitle: document.getElementById("test-subtitle").value,
-        questionCount: document.getElementById("question-count").value,
-        type: document.getElementById("test-type").value,
-        timer: document.getElementById("test-timer").value,
-        dateCreated: Date.now()
-    };
+    if (!title || !unit || !questionsCount) return alert('Please fill all fields');
 
+    const newTest = { title, subtitle, unit, type, questionsCount, questions: [] };
     tests.push(newTest);
     saveTests();
-    renderTests();
+};
 
-    highlightCreated();
-
-    // Optional: clear fields
-    document.getElementById("test-title").value = "";
-    document.getElementById("test-subtitle").value = "";
-    document.getElementById("test-timer").value = "";
-});
-
-/* ----------------------------------------------------
-   Edit + Delete (Event Delegation)
----------------------------------------------------- */
-document.getElementById("test-list-container").addEventListener("click", (e) => {
-    const index = e.target.dataset.index;
-    if (index === undefined) return;
-
-    /* ----- DELETE ----- */
-    if (e.target.classList.contains("delete-btn")) {
-        const confirmed = confirm("Are you sure you want to delete this test?");
-        if (!confirmed) return;
-
-        // Fade-out animation BEFORE removing
-        const item = e.target.closest(".test-item");
-        item.classList.add("fade-out");
-
-        setTimeout(() => {
-            tests.splice(index, 1);
-            saveTests();
-            renderTests();
-        }, 300);
-
-        return;
-    }
-
-    /* ----- EDIT ----- */
-    if (e.target.classList.contains("edit-btn")) {
-        const t = tests[index];
-
-        document.getElementById("test-title").value = t.title;
-        document.getElementById("test-subtitle").value = t.subtitle;
-        document.getElementById("question-count").value = t.questionCount;
-        document.getElementById("test-type").value = t.type;
-        document.getElementById("test-timer").value = t.timer;
-
-        // Remove old version (will be replaced on save)
+window.deleteTest = (index) => {
+    if (confirm('Delete this test?')) {
         tests.splice(index, 1);
         saveTests();
-        renderTests();
-
-        highlightCreated();
     }
-});
+};
 
-/* ----------------------------------------------------
-   Animations
----------------------------------------------------- */
+window.editTest = (index) => {
+    const test = tests[index];
+    const title = prompt('Edit title', test.title);
+    if (title) test.title = title;
+    saveTests();
+};
 
-// Highlight newly created/edited items
-function highlightCreated() {
-    const items = document.querySelectorAll(".test-item");
-    if (items.length === 0) return;
+window.takeTest = (index) => {
+    const test = tests[index];
+    questionEditor.style.display = 'block';
+    questionEditor.innerHTML = `<h3>${test.title}</h3>`;
+    test.questions.forEach((q, i) => {
+        const div = document.createElement('div');
+        div.classList.add('question-card');
+        div.innerHTML = `<label>Q${i+1}: ${q.question}</label><input type='text' value='${q.answer || ''}' />`;
+        questionEditor.appendChild(div);
+    });
+    const submitBtn = document.createElement('button');
+    submitBtn.textContent = 'Submit Answers';
+    submitBtn.onclick = () => {
+        const inputs = questionEditor.querySelectorAll('input');
+        inputs.forEach((input, i) => { test.questions[i].answer = input.value; });
+        saveTests();
+        alert('Answers saved!');
+    };
+    questionEditor.appendChild(submitBtn);
+};
 
-    const lastItem = items[items.length - 1];
-    lastItem.classList.add("highlight");
-
-    setTimeout(() => lastItem.classList.remove("highlight"), 1000);
-}
-
-/* ----------------------------------------------------
-   Initial Render
----------------------------------------------------- */
 renderTests();
+}
