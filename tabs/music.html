@@ -15,7 +15,7 @@
         <h2>Lista de Canciones</h2>
         <input type="text" id="songFilter" placeholder="Filtrar Canciones..." oninput="filterSongs()" class="inputField">
         <div id="songsContainer" class="songs-container">
-            <!-- Song cards will be dynamically inserted here -->
+            <!-- Song cards will be dynamically inserted here by displaySongs() -->
         </div>
     </div>
 
@@ -34,8 +34,6 @@
                 <input type="text" id="interpretation" placeholder="¿Cuál es tu interpretación personal y conexión con la canción?" class="inputField">
                 <button type="button" onclick="saveSongDetails()" class="btn">Guardar Respuestas</button>
             </form>
-            <button type="button" onclick="editSong()" class="btn">Editar Canción</button>
-            <button type="button" onclick="deleteSong()" class="btn delete-btn">Eliminar Canción</button>
         </div>
     </div>
 </div>
