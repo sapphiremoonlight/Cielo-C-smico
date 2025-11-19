@@ -1,4 +1,68 @@
-/* ===================== TEST TAB CSS ===================== */
+/* ---------------------------------------
+   THEME VARIABLES
+--------------------------------------*/
+
+/* Default: Emerald Cosmos */
+:root {
+    --bg: #0a1f17;
+    --sidebar: #0e694b;
+    --text: #e7fbee;
+    --text-light: #c8f2d9;
+    --accent: #9ef0c0;
+    --button: #3d7e6a;
+    --button-text: #eafff4;
+    --card-bg: rgba(57, 137, 97, 0.85);
+}
+
+/* Pastel Grove */
+.theme-pastel-grove {
+    --bg: #e3fdf5;            /* soft minty background */
+    --sidebar: #c1f4e0;       /* gentle sidebar */
+    --text: #2d6a4f;          /* readable green text */
+    --text-light: #4da77d;    /* lighter accent text */
+    --accent: #7ddcb3;        /* soft highlight color */
+    --button: #53c29e;        /* pastel button */
+    --button-text: #ffffff;   /* clean white text */
+    --card-bg: rgba(169, 242, 200, 0.85); /* pastel card background */
+}
+
+
+/* Moonlit Jade */
+.theme-jade {
+    --bg: #071612;
+    --sidebar: #0d2a24;
+    --text: #dffaf0;
+    --text-light: #a8e9d1;
+    --accent: #7fffd4;
+    --button: #114840;
+    --button-text: #dffaf0;
+    --card-bg: rgba(0, 100, 45, 0.85);
+}
+
+/* Evergreen Sunset */
+.theme-sunset {
+    --bg: #16321f;
+    --sidebar: #45915e;
+    --text: #f6ffe9;
+    --text-light: #f9ffdd;
+    --accent: #f4c86c;
+    --button: #226833;
+    --button-text: #fffce9;
+    --card-bg: rgba(50, 80, 40, 0.85);
+}
+
+/* Cosmic Noir */
+.theme-noir {
+    --bg: #000;
+    --sidebar: #0a0f0b;
+    --text: #c2ffdf;
+    --text-light: #96ffcf;
+    --accent: #87cbab;
+    --button: #107043;
+    --button-text: #c2ffdf;
+    --card-bg: rgba(0, 255, 128, 0.15);
+}
+
 #tests-tab {
 animation: fadeIn 0.4s ease;
 }
