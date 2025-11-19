@@ -286,5 +286,185 @@
       "past": {"yo":"volví","tú":"volviste","él/ella":"volvió","nosotros":"volvimos","vosotros":"volvisteis","ellos":"volvieron"},
       "future": {"yo":"volveré","tú":"volverás","él/ella":"volverá","nosotros":"volveremos","vosotros":"volveréis","ellos":"volverán"}
     }
-  }
+  },
+  {
+    "infinitive": "apagar",
+    "english": "to turn off",
+    "conjugations": {
+      "present": {"yo":"apago","tú":"apagas","él/ella":"apaga","nosotros":"apagamos","vosotros":"apagáis","ellos":"apagan"},
+      "past": {"yo":"apagué","tú":"apagaste","él/ella":"apagó","nosotros":"apagamos","vosotros":"apagasteis","ellos":"apagaron"},
+      "future": {"yo":"apagaré","tú":"apagarás","él/ella":"apagará","nosotros":"apagaremos","vosotros":"apagaréis","ellos":"apagarán"}
+    }
+  },
+  {
+    "infinitive": "aparecer",
+    "english": "to appear",
+    "conjugations": {
+      "present": {"yo":"aparezco","tú":"apareces","él/ella":"aparece","nosotros":"aparecemos","vosotros":"aparecéis","ellos":"aparecen"},
+      "past": {"yo":"aparecí","tú":"apareciste","él/ella":"apareció","nosotros":"aparecimos","vosotros":"aparecisteis","ellos":"aparecieron"},
+      "future": {"yo":"apareceré","tú":"aparecerás","él/ella":"aparecerá","nosotros":"apareceremos","vosotros":"apareceréis","ellos":"aparecerán"}
+    }
+  },
+  {
+    "infinitive": "buscar",
+    "english": "to search/look for",
+    "conjugations": {
+      "present": {"yo":"busco","tú":"buscas","él/ella":"busca","nosotros":"buscamos","vosotros":"buscáis","ellos":"buscan"},
+      "past": {"yo":"busqué","tú":"buscaste","él/ella":"buscó","nosotros":"buscamos","vosotros":"buscasteis","ellos":"buscaron"},
+      "future": {"yo":"buscaré","tú":"buscarás","él/ella":"buscará","nosotros":"buscaremos","vosotros":"buscaréis","ellos":"buscarán"}
+    }
+  },
+  {
+    "infinitive": "caer",
+    "english": "to fall",
+    "conjugations": {
+      "present": {"yo":"caigo","tú":"caes","él/ella":"cae","nosotros":"caemos","vosotros":"caéis","ellos":"caen"},
+      "past": {"yo":"caí","tú":"caíste","él/ella":"cayó","nosotros":"caímos","vosotros":"caísteis","ellos":"cayeron"},
+      "future": {"yo":"caeré","tú":"caerás","él/ella":"caerá","nosotros":"caeremos","vosotros":"caeréis","ellos":"caerán"}
+    }
+  },
+  {
+    "infinitive": "cambiar",
+    "english": "to change",
+    "conjugations": {
+      "present": {"yo":"cambio","tú":"cambias","él/ella":"cambia","nosotros":"cambiamos","vosotros":"cambiáis","ellos":"cambian"},
+      "past": {"yo":"cambié","tú":"cambiaste","él/ella":"cambió","nosotros":"cambiamos","vosotros":"cambiasteis","ellos":"cambiaron"},
+      "future": {"yo":"cambiaré","tú":"cambiarás","él/ella":"cambiará","nosotros":"cambiaremos","vosotros":"cambiaréis","ellos":"cambiarán"}
+    }
+  },
+  {
+    "infinitive": "coger",
+    "english": "to take/grab",
+    "conjugations": {
+      "present": {"yo":"cojo","tú":"coges","él/ella":"coge","nosotros":"cogemos","vosotros":"cogéis","ellos":"cogen"},
+      "past": {"yo":"cogí","tú":"cogiste","él/ella":"cogió","nosotros":"cogimos","vosotros":"cogisteis","ellos":"cogieron"},
+      "future": {"yo":"cogeré","tú":"cogerás","él/ella":"cogerá","nosotros":"cogeremos","vosotros":"cogeréis","ellos":"cogerán"}
+    }
+  },
+  {
+    "infinitive": "comprar",
+    "english": "to buy",
+    "conjugations": {
+      "present": {"yo":"compro","tú":"compras","él/ella":"compra","nosotros":"compramos","vosotros":"compráis","ellos":"compran"},
+      "past": {"yo":"compré","tú":"compraste","él/ella":"compró","nosotros":"compramos","vosotros":"comprasteis","ellos":"compraron"},
+      "future": {"yo":"compraré","tú":"comprarás","él/ella":"comprará","nosotros":"compraremos","vosotros":"compraréis","ellos":"comprarán"}
+    }
+  },
+  {
+    "infinitive": "conducir",
+    "english": "to drive",
+    "conjugations": {
+      "present": {"yo":"conduzco","tú":"conduces","él/ella":"conduce","nosotros":"conducimos","vosotros":"conducís","ellos":"conducen"},
+      "past": {"yo":"conduje","tú":"condujiste","él/ella":"condujo","nosotros":"condujimos","vosotros":"condujisteis","ellos":"condujeron"},
+      "future": {"yo":"conduciré","tú":"conducirás","él/ella":"conducirá","nosotros":"conduciremos","vosotros":"conduciréis","ellos":"conducirán"}
+    }
+  },
+  {
+    "infinitive": "construir",
+    "english": "to build",
+    "conjugations": {
+      "present": {"yo":"construyo","tú":"construyes","él/ella":"construye","nosotros":"construimos","vosotros":"construís","ellos":"construyen"},
+      "past": {"yo":"construí","tú":"construiste","él/ella":"construyó","nosotros":"construimos","vosotros":"construisteis","ellos":"construyeron"},
+      "future": {"yo":"construiré","tú":"construirás","él/ella":"construirá","nosotros":"construiremos","vosotros":"construiréis","ellos":"construirán"}
+    }
+  },
+  {
+    "infinitive": "contar",
+    "english": "to count / to tell",
+    "conjugations": {
+      "present": {"yo":"cuento","tú":"cuentas","él/ella":"cuenta","nosotros":"contamos","vosotros":"contáis","ellos":"cuentan"},
+      "past": {"yo":"conté","tú":"contaste","él/ella":"contó","nosotros":"contamos","vosotros":"contasteis","ellos":"contaron"},
+      "future": {"yo":"contaré","tú":"contarás","él/ella":"contará","nosotros":"contaremos","vosotros":"contaréis","ellos":"contarán"}
+    }
+  },
+  {
+    "infinitive": "creer",
+    "english": "to believe",
+    "conjugations": {
+      "present": {"yo":"creo","tú":"crees","él/ella":"cree","nosotros":"creemos","vosotros":"creéis","ellos":"creen"},
+      "past": {"yo":"creí","tú":"creíste","él/ella":"creyó","nosotros":"creímos","vosotros":"creísteis","ellos":"creyeron"},
+      "future": {"yo":"creeré","tú":"creerás","él/ella":"creerá","nosotros":"creeremos","vosotros":"creeréis","ellos":"creerán"}
+    }
+  },
+  {
+    "infinitive": "descansar",
+    "english": "to rest",
+    "conjugations": {
+      "present": {"yo":"descanso","tú":"descansas","él/ella":"descansa","nosotros":"descansamos","vosotros":"descansáis","ellos":"descansan"},
+      "past": {"yo":"descansé","tú":"descansaste","él/ella":"descansó","nosotros":"descansamos","vosotros":"descansasteis","ellos":"descansaron"},
+      "future": {"yo":"descansaré","tú":"descansarás","él/ella":"descansará","nosotros":"descansaremos","vosotros":"descansaréis","ellos":"descansarán"}
+    }
+  },
+  {
+    "infinitive": "despertar",
+    "english": "to wake up",
+    "conjugations": {
+      "present": {"yo":"despierto","tú":"despiertas","él/ella":"despierta","nosotros":"despertamos","vosotros":"despertáis","ellos":"despiertan"},
+      "past": {"yo":"desperté","tú":"despertaste","él/ella":"despertó","nosotros":"despertamos","vosotros":"despertasteis","ellos":"despertaron"},
+      "future": {"yo":"despertaré","tú":"despertarás","él/ella":"despertará","nosotros":"despertaremos","vosotros":"despertaréis","ellos":"despertarán"}
+    }
+  },
+  {
+    "infinitive": "dormir",
+    "english": "to sleep",
+    "conjugations": {
+      "present": {"yo":"duermo","tú":"duermes","él/ella":"duerme","nosotros":"dormimos","vosotros":"dormís","ellos":"duermen"},
+      "past": {"yo":"dormí","tú":"dormiste","él/ella":"durmió","nosotros":"dormimos","vosotros":"dormisteis","ellos":"durmieron"},
+      "future": {"yo":"dormiré","tú":"dormirás","él/ella":"dormirá","nosotros":"dormiremos","vosotros":"dormiréis","ellos":"dormirán"}
+    }
+  },
+  {
+    "infinitive": "enseñar",
+    "english": "to teach",
+    "conjugations": {
+      "present": {"yo":"enseño","tú":"enseñas","él/ella":"enseña","nosotros":"enseñamos","vosotros":"enseñáis","ellos":"enseñan"},
+      "past": {"yo":"enseñé","tú":"enseñaste","él/ella":"enseñó","nosotros":"enseñamos","vosotros":"enseñasteis","ellos":"enseñaron"},
+      "future": {"yo":"enseñaré","tú":"enseñarás","él/ella":"enseñará","nosotros":"enseñaremos","vosotros":"enseñaréis","ellos":"enseñarán"}
+    }
+  },
+  {
+    "infinitive": "entrar",
+    "english": "to enter",
+    "conjugations": {
+      "present": {"yo":"entro","tú":"entras","él/ella":"entra","nosotros":"entramos","vosotros":"entráis","ellos":"entran"},
+      "past": {"yo":"entré","tú":"entraste","él/ella":"entró","nosotros":"entramos","vosotros":"entrasteis","ellos":"entraron"},
+      "future": {"yo":"entraré","tú":"entrarás","él/ella":"entrará","nosotros":"entraremos","vosotros":"entraréis","ellos":"entrarán"}
+    }
+  },
+  {
+    "infinitive": "explicar",
+    "english": "to explain",
+    "conjugations": {
+      "present": {"yo":"explico","tú":"explicas","él/ella":"explica","nosotros":"explicamos","vosotros":"explicáis","ellos":"explican"},
+      "past": {"yo":"expliqué","tú":"explicaste","él/ella":"explicó","nosotros":"explicamos","vosotros":"explicasteis","ellos":"explicaron"},
+      "future": {"yo":"explicaré","tú":"explicarás","él/ella":"explicará","nosotros":"explicaremos","vosotros":"explicaréis","ellos":"explicarán"}
+    }
+  },
+  {
+    "infinitive": "ganar",
+    "english": "to win / to earn",
+    "conjugations": {
+      "present": {"yo":"gano","tú":"ganas","él/ella":"gana","nosotros":"ganamos","vosotros":"ganáis","ellos":"ganan"},
+      "past": {"yo":"gané","tú":"ganaste","él/ella":"ganó","nosotros":"ganamos","vosotros":"ganasteis","ellos":"ganaron"},
+      "future": {"yo":"ganaré","tú":"ganarás","él/ella":"ganará","nosotros":"ganaremos","vosotros":"ganaréis","ellos":"ganarán"}
+    }
+  },
+  {
+    "infinitive": "llorar",
+    "english": "to cry",
+    "conjugations": {
+      "present": {"yo":"lloro","tú":"lloras","él/ella":"llora","nosotros":"lloramos","vosotros":"lloráis","ellos":"lloran"},
+      "past": {"yo":"lloré","tú":"lloraste","él/ella":"lloró","nosotros":"lloramos","vosotros":"llorasteis","ellos":"lloraron"},
+      "future": {"yo":"lloraré","tú":"llorarás","él/ella":"llorará","nosotros":"lloraremos","vosotros":"lloraréis","ellos":"llorarán"}
+    }
+  },
+  {
+    "infinitive": "saltar",
+    "english": "to jump",
+    "conjugations": {
+      "present": {"yo":"salto","tú":"saltas","él/ella":"salta","nosotros":"saltamos","vosotros":"saltáis","ellos":"saltan"},
+      "past": {"yo":"salté","tú":"saltaste","él/ella":"saltó","nosotros":"saltamos","vosotros":"saltasteis","ellos":"saltaron"},
+      "future": {"yo":"saltaré","tú":"saltarás","él/ella":"saltará","nosotros":"saltaremos","vosotros":"saltaréis","ellos":"saltarán"}
+    }
+  }  
 ]
