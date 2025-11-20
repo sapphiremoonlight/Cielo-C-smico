@@ -103,7 +103,7 @@ async function setupGamification() {
         if (!currentQuestion) return;
         if (selected === currentQuestion.correctAnswer) {
             quizFeedbackEl.textContent = "✅ Correct!";
-            gainXp(30); // XP reward
+            gainXp(10); // XP reward
         } else {
             quizFeedbackEl.textContent = `❌ Wrong! Correct: ${currentQuestion.correctAnswer}`;
         }
