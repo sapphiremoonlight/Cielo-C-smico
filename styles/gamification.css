@@ -1,70 +1,107 @@
-/* ------------------------
+/* =========================
    Gamification Tab Styles
------------------------- */
-#gamification-tab { 
-    padding: 1rem;
+========================= */
+#gamification-tab {
+    padding: 1.5rem;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    transition: background 0.3s, color 0.3s;
 }
 
 #gamification-tab .card {
-    background: #f4f4f9;
-    border-radius: 10px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    transition: background 0.3s;
+}
+
+#gamification-tab h2, 
+#gamification-tab h3 {
+    margin-bottom: 0.75rem;
+    color: var(--accent);
+}
+
+/* Containers */
+#xp-level-container, 
+#quiz-container {
+    margin-top: 1.5rem;
     padding: 1.5rem;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-#gamification-tab h2, #gamification-tab h3 {
-    margin-bottom: 0.5rem;
-}
-
-#xp-level-container, #quiz-container {
-    margin-top: 1rem;
-    padding: 1rem;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    background: rgba(255, 255, 255, 0.05); /* subtle overlay for theme cards */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* XP Bar */
 .xp-bar {
     width: 100%;
-    height: 20px;
-    background: #ddd;
-    border-radius: 10px;
+    height: 22px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
     overflow: hidden;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
 }
 
 .xp-fill {
     height: 100%;
-    background: #4caf50;
+    background: var(--accent);
     width: 0%;
-    transition: width 0.5s ease;
+    transition: width 0.5s ease-in-out;
+    border-radius: 12px 0 0 12px;
 }
 
 /* Buttons */
 button {
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1.2rem;
     border: none;
-    border-radius: 5px;
-    background: #4caf50;
-    color: white;
+    border-radius: 6px;
+    background: var(--button);
+    color: var(--button-text);
     cursor: pointer;
+    font-weight: 600;
     margin-top: 0.5rem;
+    transition: all 0.2s ease;
 }
 
 button:hover {
-    opacity: 0.85;
+    filter: brightness(1.1);
 }
 
-/* Quiz options */
 #quiz-options button {
     display: block;
     width: 100%;
     margin-bottom: 0.5rem;
-    background: #2196f3;
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+#quiz-options button:hover {
+    filter: brightness(1.2);
 }
 
 #quiz-feedback {
     margin-top: 0.5rem;
     font-weight: bold;
+    color: var(--text-light);
+}
+
+/* XP & Quiz Titles */
+#xp-level-container h3,
+#quiz-container h3 {
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Optional: Smooth fade-in for the tab */
+.tab.fade-in {
+    animation: fadeIn 0.6s ease forwards;
+    opacity: 0;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
 }
