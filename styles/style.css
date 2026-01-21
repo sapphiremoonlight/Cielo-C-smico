@@ -195,25 +195,6 @@ filter: drop-shadow(0 0 4px rgba(0,255,165,0.6));
     cursor: pointer;
 }
 
-/* --------------------------
-   HAMBURGER MENU
---------------------------- */
-.hamburger {
-    display: none;
-    position: fixed;
-    top: 18px;
-    left: 18px;
-    z-index: 1001;
-    font-size: 28px;
-    background: var(--button);
-    color: var(--button-text);
-    border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
 /* ----------------------------------------
    3-MONTH PATHWAY STYLES
 ----------------------------------------- */
@@ -936,48 +917,6 @@ color: var(--text);
     .app-container {
         flex-direction: column;
     }
-
-     .hamburger {
-        display: block;
-    }
-
-    /* Sidebar hidden by default */
-    .sidebar {
-        position: fixed;
-        top: 0;
-        left: -100%;
-        height: 100%;
-        width: 250px;
-        flex-direction: column;
-        background: var(--sidebar);
-        padding: 25px;
-        border-right: 2px solid var(--accent);
-        transition: left 0.3s ease;
-        z-index: 1000;
-    }
-
-    /* Slide in when open */
-    .sidebar.open {
-        left: 0;
-    }
-
-    /* Optional: add overlay when sidebar is open */
-    body.sidebar-open::after {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.35);
-        z-index: 900;
-    }
-
-   
-    .app-container {
-        flex-direction: column;
-    }
-
    
     /* Make nav buttons full-width again */
     .nav-btn {
