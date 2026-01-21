@@ -23,6 +23,16 @@ body {
     min-height: 100vh;
 }
 
+/* LARGE-SCREEN SIDEBAR */
+.sidebar {
+    width: 270px;
+    padding: 25px;
+    background: var(--sidebar);
+    border-right: 2px solid var(--accent);
+    display: flex;
+    flex-direction: column;
+}
+
 .sidebar-toggle-btn {
     display: none;
     position: fixed;
