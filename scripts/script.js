@@ -1,4 +1,19 @@
 // -----------------------------
+// SIDE BAR
+// -----------------------------
+const sidebar = document.querySelector('.sidebar');
+const toggleBtn = document.createElement('button');
+toggleBtn.classList.add('sidebar-toggle-btn');
+toggleBtn.textContent = '☰';
+document.body.appendChild(toggleBtn);
+
+toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
+    document.body.classList.toggle('sidebar-open');
+});
+
+
+// -----------------------------
 // TAB LOADING
 // -----------------------------
 const tabContent = document.getElementById("tabContent");
