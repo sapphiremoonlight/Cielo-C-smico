@@ -914,8 +914,42 @@ color: var(--text);
    Responsive Layout for Mobile
 --------------------------- */
 @media (max-width: 768px) { /* iPhones, small tablets */
+     body.sidebar-open .content {
+        margin-left: 270px;
+    }
+   
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -270px; /* hidden by default */
+        width: 270px;
+        height: 100%;
+        padding: 25px;
+        background: var(--sidebar);
+        border-right: 2px solid var(--accent);
+        flex-direction: column;
+        transition: left 0.3s ease;
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    .sidebar.active {
+        left: 0; /* slide in */
+    }
+
     .app-container {
         flex-direction: column;
+        padding-top: 0;
+    }
+
+    .content {
+        padding: 20px;
+        margin-left: 0;
+        transition: margin-left 0.3s ease;
+    }
+
+    .sidebar-toggle-btn {
+        display: block;
     }
    
     /* Make nav buttons full-width again */
@@ -977,3 +1011,79 @@ color: var(--text);
         padding: 4px;
     }
 }
+
+/* ---------------------------
+   TAB CONTAINER SCALING
+---------------------------- */
+@media (max-width: 600px) {
+    .tab-container,
+    .dashboard-wrapper,
+    .form-section,
+    .month-card,
+    .day-card {
+        padding: 12px;
+    }
+
+    .test-form input,
+    .test-form select,
+    .test-form button,
+    .inputField,
+    .btn {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .tests-list .test-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .tests-list .test-item button {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    /* Flashcards */
+    .flashcard-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .flashcard {
+        width: 95%;
+        max-width: 280px;
+        height: auto;
+    }
+
+    .mini-flashcard {
+        width: 60px;
+        height: 45px;
+        line-height: 45px;
+        font-size: 10px;
+    }
+
+    /* YouTube videos */
+    #youtubeVideos iframe {
+        width: 100%;
+        height: 160px;
+    }
+
+    /* Song cards */
+    .songs-container {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .song-card {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    /* Tables */
+    #verbResult table, #verbResult th, #verbResult td {
+        font-size: 11px;
+        padding: 4px 2px;
+    }
+}
+
