@@ -1,21 +1,34 @@
+// =====================
+// TESTS DATA
+// =====================
+let tests = JSON.parse(localStorage.getItem("tests")) || [];
+window.tests = tests; // expose globally for print + dashboard
+
+
+// =====================
+// PDF PRINTING
+// =====================
 window.printTest = async (index, includeAnswers = false) => {
     const { jsPDF } = window.jspdf;
     const test = tests[index];
-    const doc = new jsPDF();
+    if (!test) return;
 
+    const doc = new jsPDF();
     const logo = await toBase64("logo.png");
 
     // Header
     doc.setFillColor(150, 200, 150);
     doc.rect(0, 0, 210, 30, "F");
     doc.addImage(logo, "PNG", 10, 4, 22, 22);
+
     doc.setFontSize(20);
     doc.setTextColor(255, 255, 255);
     doc.text(test.title, 105, 18, { align: "center" });
+
     doc.setFontSize(12);
-    doc.text(test.subtitle, 105, 26, { align: "center" });
-    
-    // Set text color for questions
+    doc.text(test.subtitle || "", 105, 26, { align: "center" });
+
+    // Questions
     doc.setTextColor(0, 70, 0);
     let y = 40;
 
@@ -25,7 +38,6 @@ window.printTest = async (index, includeAnswers = false) => {
             y = 20;
         }
 
-        // Question box
         doc.setFillColor(230, 255, 230);
         doc.roundedRect(8, y - 4, 194, 12, 3, 3, "F");
         doc.setFontSize(13);
@@ -33,60 +45,74 @@ window.printTest = async (index, includeAnswers = false) => {
         y += 12;
 
         // Multiple choice
-        if (test.type === 'multiple-choice') {
+        if (test.type === "multiple-choice") {
             q.options.forEach((opt, idx) => {
-                let isCorrect = includeAnswers && idx === q.correct;
+                const isCorrect = includeAnswers && idx === q.correct;
+
                 if (isCorrect) {
                     doc.setFillColor(210, 245, 210);
                     doc.rect(10, y - 5, 190, 8, "F");
                 }
+
                 doc.setTextColor(0, 90, 0);
-                doc.text(`${["A","B","C","D"][idx]}. ${opt}`, 14, y);
+                doc.text(`${["A", "B", "C", "D"][idx]}. ${opt}`, 14, y);
+
                 if (isCorrect) {
                     doc.setTextColor(0, 140, 0);
                     doc.text("✔", 200, y);
                 }
+
                 doc.setTextColor(0, 70, 0);
                 y += 8;
             });
-        } 
+        }
+
         // Match
-        else if (test.type === 'match') {
-            for (let j = 0; j < q.matchLeft.length; j++) {
-                doc.text(`${q.matchLeft[j]} → ${includeAnswers ? q.matchRight[j] : '_____'}`, 12, y);
+        else if (test.type === "match") {
+            q.matchLeft.forEach((left, j) => {
+                doc.text(
+                    `${left} → ${includeAnswers ? q.matchRight[j] : "_____"}`,
+                    12,
+                    y
+                );
                 y += 8;
-            }
-        } 
+            });
+        }
+
         // Written
-        else if (test.type === 'written') {
-            doc.text(includeAnswers && q.answer ? `Answer: ${q.answer}` : 'Answer: ______', 12, y);
+        else if (test.type === "written") {
+            doc.text(
+                includeAnswers && q.answer
+                    ? `Answer: ${q.answer}`
+                    : "Answer: ______",
+                12,
+                y
+            );
             y += 10;
         }
 
         y += 6;
     });
 
-    // Add page numbers inside crescent moon shape
+    // Page numbers
     const totalPages = doc.internal.getNumberOfPages();
     for (let i = 1; i <= totalPages; i++) {
         doc.setPage(i);
-        const pageNumber = i;
-        
-        // Crescent Moon Shape
-        doc.setFillColor(255, 255, 255); // White moon
+        doc.setFillColor(255, 255, 255);
         doc.ellipse(105, 285, 20, 10, 0, 180, "F");
 
-        // Add page number in the crescent moon
-        doc.setTextColor(0, 0, 0); // Black text color for number
+        doc.setTextColor(0, 0, 0);
         doc.setFontSize(10);
-        doc.text(`Page ${pageNumber}`, 105, 287, { align: "center" });
+        doc.text(`Page ${i}`, 105, 287, { align: "center" });
     }
 
-    // Save the PDF
     doc.save(`${test.title}.pdf`);
 };
 
-// Helper to convert image to Base64
+
+// =====================
+// HELPERS
+// =====================
 function toBase64(url) {
     return fetch(url)
         .then(res => res.blob())
@@ -97,5 +123,16 @@ function toBase64(url) {
         }));
 }
 
-renderTests();
+
+// =====================
+// TEST TAB INIT
+// =====================
+function setupTests() {
+    // refresh local copy in case dashboard or other tab changed it
+    tests = JSON.parse(localStorage.getItem("tests")) || [];
+    window.tests = tests;
+
+    renderTests();
+}
+
 window.setupTests = setupTests;
