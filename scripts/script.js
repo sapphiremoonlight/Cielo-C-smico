@@ -7,12 +7,14 @@ const sidebar = document.querySelector(".sidebar");
 
 hamburgerBtn.addEventListener("click", () => {
     sidebar.classList.toggle("open");
+    document.body.classList.toggle("sidebar-open"); // overlay
 });
 
-/* Optional: auto-close when a tab is clicked */
+/* Close sidebar when a nav tab is clicked (mobile only) */
 document.querySelectorAll(".nav-btn").forEach(btn => {
     btn.addEventListener("click", () => {
         sidebar.classList.remove("open");
+        document.body.classList.remove("sidebar-open");
     });
 });
 
