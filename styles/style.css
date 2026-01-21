@@ -25,7 +25,7 @@ body {
 
 /* LARGE-SCREEN SIDEBAR */
 .sidebar {
-    width: 270px;
+    width: 300px;
     padding: 25px;
     background: var(--sidebar);
     border-right: 2px solid var(--accent);
@@ -936,6 +936,13 @@ color: var(--text);
    Responsive Layout for Mobile
 --------------------------- */
 @media (max-width: 768px) { /* iPhones, small tablets */
+    .theme-switcher {
+        margin-top: 15px; /* less space than 'auto' */
+    }
+
+    .tab-container {
+        padding: 15px; /* optional: reduce padding on small screens */
+    }
    
     /* Overlay for small screens */
     body.sidebar-open::before {
