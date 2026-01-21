@@ -1,3 +1,21 @@
+// --------------------
+//    HAMBURGER MENU
+// --------------------
+
+const hamburgerBtn = document.getElementById("hamburgerBtn");
+const sidebar = document.querySelector(".sidebar");
+
+hamburgerBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("open");
+});
+
+/* Optional: auto-close when a tab is clicked */
+document.querySelectorAll(".nav-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        sidebar.classList.remove("open");
+    });
+});
+
 // -----------------------------
 // TAB LOADING
 // -----------------------------
