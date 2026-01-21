@@ -936,14 +936,7 @@ color: var(--text);
    Responsive Layout for Mobile
 --------------------------- */
 @media (max-width: 768px) { /* iPhones, small tablets */
-    .theme-switcher {
-        margin-top: 15px; /* less space than 'auto' */
-    }
-
-    .tab-container {
-        padding: 15px; /* optional: reduce padding on small screens */
-    }
-   
+    
     /* Overlay for small screens */
     body.sidebar-open::before {
         content: '';
@@ -957,7 +950,6 @@ color: var(--text);
         transition: opacity 0.3s ease;
     }
 
-    /* Sidebar */
     .sidebar {
         position: fixed;
         top: 0;
@@ -970,6 +962,11 @@ color: var(--text);
         flex-direction: column;
         z-index: 1000;
         transition: left 0.3s ease;
+
+        /* NEW: scrollable content */
+        overflow-y: auto;      /* vertical scroll if content overflows */
+        -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+        padding-bottom: 20px;  /* extra space at bottom for scrolling */
     }
 
     /* Sidebar open */
