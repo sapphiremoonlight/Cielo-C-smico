@@ -25,7 +25,7 @@ body {
 
 /* LARGE-SCREEN SIDEBAR */
 .sidebar {
-    width: 100%;
+    width: 40%;
     padding: 25px;
     background: var(--sidebar);
     border-right: 2px solid var(--accent);
