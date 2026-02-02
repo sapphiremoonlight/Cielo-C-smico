@@ -15,6 +15,22 @@ body {
     transition: background 0.5s, color 0.5s;
 }
 
+
+/* ===================== TEST THEME ===================== */
+.theme-alameda {
+    --green-dark: #16321f;
+    --green-main: #226833;
+    --green-soft: #45915e;
+
+    --cream: #fffce9;
+    --cream-soft: #f6ffe9;
+    --cream-warm: #f9ffdd;
+
+    --gold: #f4c86c;
+
+    --overlay: rgba(50, 80, 40, 0.85);
+}
+
 /* ------------------------------
    LAYOUT
 --------------------------------*/
@@ -667,75 +683,117 @@ h1 {
 }
 
 
-/* ===================== TEST TAB CSS ===================== */
-.test-form {
-display: flex;
-flex-direction: column;
-gap: 10px;
-margin-bottom: 20px;
+/* ===================== FULL TEST OVERLAY ===================== */
+.test-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    overflow-y: auto;
+    background:
+        radial-gradient(circle at top, var(--cream-soft), var(--cream)),
+        linear-gradient(180deg, var(--green-soft), transparent);
+    padding: 50px 20px;
+    animation: fadeIn 0.4s ease;
 }
 
-.test-form input, .test-form select, .test-form button {
-padding: 10px;
-border-radius: 8px;
-border: 1px solid var(--accent);
-background: var(--card-bg);
-color: var(--text);
+/* Header */
+.test-header {
+    text-align: center;
+    margin-bottom: 40px;
 }
 
-.test-form button {
-background: var(--button);
-color: var(--button-text);
-cursor: pointer;
-border: none;
+.test-header h1 {
+    font-size: 2.4rem;
+    color: var(--green-dark);
+    margin-bottom: 6px;
 }
 
-.test-form button:hover {
-background: var(--accent);
-color: var(--bg);
+.test-header h3 {
+    color: var(--green-soft);
+    font-weight: 500;
 }
 
-.tests-list .test-item {
-background: var(--card-bg);
-padding: 12px;
-margin-bottom: 10px;
-border-radius: 10px;
-display: flex;
-justify-content: space-between;
-align-items: center;
-border: 1px solid var(--accent);
+.test-header p {
+    font-style: italic;
+    color: var(--gold);
 }
 
-.tests-list button {
-margin-left: 5px;
-padding: 6px 10px;
-border-radius: 6px;
-border: none;
-background: var(--button);
-color: var(--button-text);
-cursor: pointer;
+/* Question cards */
+.test-question-card {
+    background: var(--cream-soft);
+    border: 2px solid var(--green-main);
+    border-left: 8px solid var(--gold);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    animation: slideUp 0.4s ease both;
 }
 
-.tests-list button:hover {
-background: var(--accent);
-color: var(--bg);
+.test-question-card p {
+    font-weight: 600;
+    margin-bottom: 10px;
 }
 
-#questionEditor .question-card {
-background: var(--card-bg);
-padding: 12px;
-border-radius: 8px;
-margin-bottom: 12px;
+/* Inputs */
+.test-question-card input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--green-main);
 }
 
-#questionEditor input, #questionEditor textarea {
-width: 100%;
-padding: 8px;
-margin-top: 6px;
-border-radius: 6px;
-border: 1px solid var(--accent);
-background: var(--bg);
-color: var(--text);
+.test-question-card label {
+    display: block;
+    margin: 6px 0;
+    cursor: pointer;
+}
+
+/* Buttons */
+.test-actions {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.test-actions button {
+    background: linear-gradient(135deg, var(--green-main), var(--green-soft));
+    color: white;
+    border: none;
+    padding: 12px 26px;
+    border-radius: 999px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0 8px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.test-actions button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(15px);
+        opacity: 0
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1
+    }
 }
 
 /* ---------------------------------------
