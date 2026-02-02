@@ -1,7 +1,8 @@
-// ===================== TESTS.JS (FULLY FIXED – NOTHING MISSING) =====================
+// ===================== TESTS.JS (FULLY FIXED + ENHANCED) =====================
 
-// Global test storage
+// GLOBAL STATE
 let testList = [];
+let editingTestId = null;
 
 // -----------------------------
 // SETUP
@@ -24,7 +25,7 @@ window.setupTests = function () {
 // -----------------------------
 function loadTestsFromLocalStorage() {
     const saved = localStorage.getItem('testList');
-    if (saved) testList = JSON.parse(saved);
+    testList = saved ? JSON.parse(saved) : [];
 }
 
 function saveTestsToLocalStorage() {
@@ -32,77 +33,79 @@ function saveTestsToLocalStorage() {
 }
 
 // -----------------------------
-// CREATE TEST
+// CREATE / EDIT TEST
 // -----------------------------
 function createTest() {
     const titleEl = document.getElementById('testTitle');
     const subtitleEl = document.getElementById('testSubtitle');
     const countEl = document.getElementById('testQuestions');
     const typeEl = document.getElementById('testType');
-    const form = document.getElementById('questionForm');
-
-    if (!titleEl || !countEl || !typeEl || !form) {
-        alert('Test tab not ready');
-        return;
-    }
 
     const title = titleEl.value.trim();
-    const subtitle = subtitleEl?.value.trim() || '';
+    const subtitle = subtitleEl.value.trim();
     const count = parseInt(countEl.value);
     const type = typeEl.value;
 
     if (!title || !count) {
-        alert('Fill required fields');
+        alert('Please fill all required fields.');
         return;
     }
 
     const questions = [];
 
-    if (type === 'multiple-choice') {
-        for (let i = 1; i <= count; i++) {
-            questions.push({
-                questionText: document.getElementById(`question-text-${i}`)?.value || '',
-                options: {
-                    A: document.getElementById(`answer-A-${i}`)?.value || '',
-                    B: document.getElementById(`answer-B-${i}`)?.value || '',
-                    C: document.getElementById(`answer-C-${i}`)?.value || '',
-                    D: document.getElementById(`answer-D-${i}`)?.value || ''
-                },
-                correctAnswer: document.querySelector(`input[name="correct-answer-${i}"]:checked`)?.value || ''
-            });
+    for (let i = 1; i <= count; i++) {
+        const questionText = document.getElementById(`question-text-${i}`).value.trim();
+
+        if (type === 'multiple-choice') {
+            const options = {
+                A: document.getElementById(`answer-A-${i}`).value.trim(),
+                B: document.getElementById(`answer-B-${i}`).value.trim(),
+                C: document.getElementById(`answer-C-${i}`).value.trim(),
+                D: document.getElementById(`answer-D-${i}`).value.trim()
+            };
+            const correctAnswer = document.querySelector(
+                `input[name="correct-answer-${i}"]:checked`
+            )?.value || '';
+
+            questions.push({ questionText, options, correctAnswer });
+        } else {
+            const answer = document.getElementById(`answer-${i}`).value.trim();
+            questions.push({ questionText, options: { answer } });
         }
     }
 
-    if (type === 'match') {
-        const rows = [];
-        for (let i = 1; i <= count; i++) {
-            rows.push({
-                left: document.getElementById(`match-left-${i}`)?.value || '',
-                right: document.getElementById(`match-right-${i}`)?.value || ''
-            });
-        }
-        questions.push({ rows });
-    }
-
-    testList.push({
-        id: Date.now(),
+    const testData = {
+        id: editingTestId || Date.now(),
         title,
         subtitle,
         questionCount: count,
         type,
+        timer: 15,
         questions
-    });
+    };
+
+    if (editingTestId) {
+        const index = testList.findIndex(t => t.id === editingTestId);
+        testList[index] = testData;
+        editingTestId = null;
+    } else {
+        testList.push(testData);
+    }
 
     saveTestsToLocalStorage();
     displayTestList();
-    updateQuestionFields();
 
     titleEl.value = '';
-    if (subtitleEl) subtitleEl.value = '';
+    subtitleEl.value = '';
+    countEl.value = 10;
+    typeEl.value = 'multiple-choice';
+    updateQuestionFields();
+
+    alert('Test saved successfully ✅');
 }
 
 // -----------------------------
-// DISPLAY TESTS
+// DISPLAY TEST LIST
 // -----------------------------
 function displayTestList() {
     const container = document.getElementById('savedTests');
@@ -111,63 +114,102 @@ function displayTestList() {
     container.innerHTML = '';
 
     testList.forEach(test => {
-        container.innerHTML += `
-            <div class="test-item">
-                <h2>${test.title}</h2>
-                <p>${test.subtitle || '—'}</p>
-                <p>${test.questionCount} questions • ${test.type}</p>
-                <button onclick="takeTest(${test.id})">Take Test</button>
-                <button onclick="downloadTestPDF(${test.id})">PDF</button>
+        const div = document.createElement('div');
+        div.className = 'test-item';
+
+        div.innerHTML = `
+            <h2>${test.title}</h2>
+            <p>${test.subtitle || ''}</p>
+            <p>Questions: ${test.questionCount}</p>
+            <div>
                 <button onclick="editTest(${test.id})">Edit</button>
                 <button onclick="deleteTest(${test.id})">Delete</button>
+                <button onclick="takeTest(${test.id})">Take Test</button>
             </div>
         `;
+        container.appendChild(div);
     });
 }
 
 // -----------------------------
-// UPDATE QUESTION FIELDS
+// EDIT / DELETE
+// -----------------------------
+function editTest(id) {
+    const test = testList.find(t => t.id === id);
+    if (!test) return;
+
+    editingTestId = id;
+
+    document.getElementById('testTitle').value = test.title;
+    document.getElementById('testSubtitle').value = test.subtitle;
+    document.getElementById('testQuestions').value = test.questionCount;
+    document.getElementById('testType').value = test.type;
+
+    updateQuestionFields();
+
+    test.questions.forEach((q, i) => {
+        document.getElementById(`question-text-${i + 1}`).value = q.questionText;
+
+        if (test.type === 'multiple-choice') {
+            for (let opt in q.options) {
+                document.getElementById(`answer-${opt}-${i + 1}`).value = q.options[opt];
+            }
+            document.querySelector(
+                `input[name="correct-answer-${i + 1}"][value="${q.correctAnswer}"]`
+            ).checked = true;
+        } else {
+            document.getElementById(`answer-${i + 1}`).value = q.options.answer;
+        }
+    });
+
+    alert('Editing mode ✏️');
+}
+
+function deleteTest(id) {
+    if (!confirm('Delete this test?')) return;
+    testList = testList.filter(t => t.id !== id);
+    saveTestsToLocalStorage();
+    displayTestList();
+}
+
+// -----------------------------
+// DYNAMIC QUESTIONS
 // -----------------------------
 function updateQuestionFields() {
-    const count = parseInt(document.getElementById('testQuestions')?.value) || 5;
-    const type = document.getElementById('testType')?.value;
+    const count = parseInt(document.getElementById('testQuestions').value);
+    const type = document.getElementById('testType').value;
     const form = document.getElementById('questionForm');
 
-    if (!form) return;
     form.innerHTML = '';
 
-    if (type === 'multiple-choice') {
-        for (let i = 1; i <= count; i++) {
-            form.innerHTML += `
-                <div class="question">
-                    <h3>Question ${i}</h3>
-                    <input id="question-text-${i}" placeholder="Question text">
-                    ${['A','B','C','D'].map(l => `
-                        <div>
-                            <input id="answer-${l}-${i}" placeholder="Option ${l}">
-                            <input type="radio" name="correct-answer-${i}" value="${l}"> Correct
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-        }
-    }
+    for (let i = 1; i <= count; i++) {
+        const div = document.createElement('div');
+        div.className = 'question';
 
-    if (type === 'match') {
-        form.innerHTML += `<h3>Match the Columns</h3>`;
-        for (let i = 1; i <= count; i++) {
-            form.innerHTML += `
-                <div class="match-row">
-                    <input id="match-left-${i}" placeholder="Left ${i}">
-                    <input id="match-right-${i}" placeholder="Right ${i}">
-                </div>
+        if (type === 'multiple-choice') {
+            div.innerHTML = `
+                <h3>Question ${i}</h3>
+                <input id="question-text-${i}" placeholder="Question text">
+                ${['A','B','C','D'].map(opt => `
+                    <div>
+                        <input id="answer-${opt}-${i}" placeholder="Option ${opt}">
+                        <input type="radio" name="correct-answer-${i}" value="${opt}"> Correct
+                    </div>
+                `).join('')}
+            `;
+        } else {
+            div.innerHTML = `
+                <h3>Question ${i}</h3>
+                <input id="question-text-${i}" placeholder="Question">
+                <input id="answer-${i}" placeholder="Correct answer">
             `;
         }
+        form.appendChild(div);
     }
 }
 
 // -----------------------------
-// TAKE TEST (FULL SCREEN)
+// TAKE TEST (FULL SCREEN UI)
 // -----------------------------
 function takeTest(id) {
     const test = testList.find(t => t.id === id);
@@ -176,125 +218,82 @@ function takeTest(id) {
     document.getElementById('tests-tab').style.display = 'none';
 
     const overlay = document.createElement('div');
-    overlay.className = 'test-overlay';
+    overlay.style.position = 'fixed';
+    overlay.style.inset = 0;
+    overlay.style.background = 'linear-gradient(135deg, #e8f5e9, #c8e6c9)';
+    overlay.style.padding = '30px';
+    overlay.style.overflowY = 'auto';
+    overlay.style.zIndex = 9999;
 
-    const fecha = new Date().toLocaleDateString('es-ES', {
-        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-    });
-
-    overlay.innerHTML = `
-        <div class="test-header">
-            <h1>${test.title}</h1>
-            <h3>${test.subtitle || ''}</h3>
-            <p>${fecha}</p>
-        </div>
-
-        <form id="takeTestForm" class="test-content"></form>
-
-        <div class="test-actions">
-            <button id="submitTest">Submit</button>
-            <button id="exitTest">Exit</button>
-        </div>
+    const header = document.createElement('div');
+    header.style.textAlign = 'center';
+    header.innerHTML = `
+        <h1>${test.title}</h1>
+        <p>${test.subtitle || ''}</p>
     `;
 
-    document.body.appendChild(overlay);
+    const timerEl = document.createElement('div');
+    let timeLeft = test.timer;
+    timerEl.innerText = `⏱ ${timeLeft}:00`;
+    timerEl.style.fontWeight = 'bold';
+    timerEl.style.textAlign = 'center';
 
-    const form = document.getElementById('takeTestForm');
+    overlay.append(header, timerEl);
 
-    if (test.type === 'multiple-choice') {
-        test.questions.forEach((q, i) => {
-            const div = document.createElement('div');
-            div.className = 'test-question-card';
-            div.innerHTML = `
-                <div class="question-meta">Pregunta ${i + 1} de ${test.questionCount}</div>
-                <p>${q.questionText}</p>
-                ${Object.entries(q.options).map(([k,v]) => `
-                    <label>
-                        <input type="radio" name="q-${i}" value="${k}"> ${k}. ${v}
-                    </label>
-                `).join('')}
-            `;
-            form.appendChild(div);
-        });
-    }
+    const form = document.createElement('form');
+    overlay.appendChild(form);
 
-    if (test.type === 'match') {
-        test.questions[0].rows.forEach((row, i) => {
-            const div = document.createElement('div');
-            div.className = 'test-question-card';
-            div.innerHTML = `
-                <div class="question-meta">Fila ${i + 1}</div>
-                <p><strong>${row.left}</strong></p>
-                <input name="match-${i}" placeholder="Match">
-            `;
-            form.appendChild(div);
-        });
-    }
-
-    document.getElementById('submitTest').onclick = e => {
-        e.preventDefault();
-        let score = 0;
-
-        if (test.type === 'multiple-choice') {
-            test.questions.forEach((q, i) => {
-                if (document.querySelector(`input[name="q-${i}"]:checked`)?.value === q.correctAnswer) {
-                    score++;
-                }
-            });
-            alert(`Score: ${score}/${test.questionCount}`);
-        }
-
-        if (test.type === 'match') {
-            test.questions[0].rows.forEach((row, i) => {
-                const val = document.querySelector(`input[name="match-${i}"]`)?.value.trim();
-                if (val?.toLowerCase() === row.right.toLowerCase()) score++;
-            });
-            alert(`Correct: ${score}/${test.questions[0].rows.length}`);
-        }
-
-        overlay.remove();
-        document.getElementById('tests-tab').style.display = 'block';
-    };
-
-    document.getElementById('exitTest').onclick = () => {
-        overlay.remove();
-        document.getElementById('tests-tab').style.display = 'block';
-    };
-}
-
-// -----------------------------
-// PDF DOWNLOAD
-// -----------------------------
-function downloadTestPDF(id) {
-    const test = testList.find(t => t.id === id);
-    if (!test) return;
-
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-
-    doc.text(test.title, 10, 10);
-    let y = 20;
+    const progress = document.createElement('div');
+    progress.innerText = `Answered 0 of ${test.questionCount}`;
+    progress.style.textAlign = 'center';
+    overlay.appendChild(progress);
 
     test.questions.forEach((q, i) => {
-        doc.text(`${i + 1}. ${q.questionText}`, 10, y);
-        y += 10;
+        const card = document.createElement('div');
+        card.style.background = '#fff';
+        card.style.padding = '15px';
+        card.style.margin = '20px 0';
+        card.style.borderRadius = '12px';
+        card.style.boxShadow = '0 10px 25px rgba(0,0,0,0.1)';
+
+        card.innerHTML = `<p><b>${i + 1}. ${q.questionText}</b></p>`;
+
+        for (let opt in q.options) {
+            card.innerHTML += `
+                <div>
+                    <input type="radio" name="q-${i}" value="${opt}">
+                    ${opt}: ${q.options[opt]}
+                </div>
+            `;
+        }
+        form.appendChild(card);
     });
 
-    doc.save(`${test.title}.pdf`);
-}
+    const submitBtn = document.createElement('button');
+    submitBtn.innerText = 'Submit Test';
+    submitBtn.onclick = e => {
+        e.preventDefault();
+        let score = 0;
+        test.questions.forEach((q, i) => {
+            const selected = document.querySelector(`input[name="q-${i}"]:checked`)?.value;
+            if (selected === q.correctAnswer) score++;
+        });
+        alert(`Score: ${score}/${test.questionCount}`);
+        overlay.remove();
+        document.getElementById('tests-tab').style.display = 'block';
+    };
 
-// -----------------------------
-// UTIL
-// -----------------------------
-function deleteTest(id) {
-    if (!confirm('Delete this test?')) return;
-    testList = testList.filter(t => t.id !== id);
-    saveTestsToLocalStorage();
-    displayTestList();
-}
+    overlay.appendChild(submitBtn);
+    document.body.appendChild(overlay);
 
-function editTest(id) {
-    alert('Edit mode coming soon 👀');
+    const interval = setInterval(() => {
+        timeLeft--;
+        timerEl.innerText = `⏱ ${timeLeft}:00`;
+        if (timeLeft <= 0) {
+            clearInterval(interval);
+            submitBtn.click();
+        }
+    }, 60000);
 }
 
 // -----------------------------
@@ -307,19 +306,13 @@ function createDefaultTestIfEmpty() {
         id: Date.now(),
         title: 'Spanish Vocabulary Quiz',
         subtitle: 'Basic Practice',
-        questionCount: 2,
+        questionCount: 3,
         type: 'multiple-choice',
+        timer: 15,
         questions: [
-            {
-                questionText: 'How do you say "hello"?',
-                options: { A: 'Hola', B: 'Adiós', C: 'Gracias', D: 'Por favor' },
-                correctAnswer: 'A'
-            },
-            {
-                questionText: 'How do you say "goodbye"?',
-                options: { A: 'Hola', B: 'Adiós', C: 'Gracias', D: 'Buenos días' },
-                correctAnswer: 'B'
-            }
+            { questionText: 'Apple?', options: { A:'Manzana',B:'Uva',C:'Pera',D:'Pan' }, correctAnswer:'A' },
+            { questionText: 'Dog?', options: { A:'Gato',B:'Perro',C:'Pez',D:'Ave' }, correctAnswer:'B' },
+            { questionText: 'House?', options: { A:'Mesa',B:'Casa',C:'Libro',D:'Agua' }, correctAnswer:'B' }
         ]
     });
 
